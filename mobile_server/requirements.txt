@@ -4,4 +4,4 @@ pillow>=11,<13
 pypinyin>=0.53,<1
 python-multipart>=0.0.18,<1
 uvicorn[standard]>=0.34,<1
-websockets>=14,<17
+websockets>=17.1,<18
