@@ -1,0 +1,66 @@
+# Copy to config.toml. Relative paths are resolved from this repository.
+
+[paths]
+comfyui = "runtime/ComfyUI"
+data = "data"
+# When connecting an existing ComfyUI, set this to its actual output directory.
+output = "data/output"
+cache = "data/cache"
+ffmpeg = "ffmpeg"
+ffprobe = "ffprobe"
+git = "git"
+
+[comfyui]
+url = "http://127.0.0.1:8388"
+# Start your configured ComfyUI separately. Automatic startup uses this app's Python environment.
+auto_start = false
+launch_args = [
+    "--reserve-vram", "1.5",
+    "--vram-headroom", "1.0",
+    "--preview-method", "none",
+]
+
+[server]
+host = "0.0.0.0"
+port = 8090
+
+[features]
+# Disable workflows whose models or custom nodes are not installed.
+workflows = ["qwen2511-modular-flux2", "krea-identity-edit", "minimax-h3"]
+
+[models.krea_identity]
+base_model = "krea2_turbo_fp8_scaled.safetensors"
+text_encoder = "qwen3vl_4b_fp8_scaled.safetensors"
+vae = "qwen_image_vae.safetensors"
+identity_lora = "krea2_identity_edit_v1_2.safetensors"
+
+[models.minimax_h3]
+diffusion_model = "minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+text_encoder = "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+video_vae = "minimax_h3_video_vae_fp16.safetensors"
+audio_vae = "minimax_h3_audio_vae_fp32.safetensors"
+turbo_lora = "minimax_h3_turbo_v4_step600_ema.safetensors"
+
+[models.qwen2511]
+base_model = "qwen_image_edit_2511_fp8_e4m3fn_scaled.safetensors"
+text_encoder = "qwen_2.5_vl_7b_fp8_scaled.safetensors"
+vae = "qwen_image_vae.safetensors"
+lightning_lora = "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors"
+
+[models.enhanced_upscale]
+base_model = "flux-2-klein-9b-fp8.safetensors"
+text_encoder = "qwen_3_8b_fp8mixed.safetensors"
+vae = "flux2-vae.safetensors"
+# Optional: when this file exists, the original consistency-LoRA chain and strength controls are enabled.
+consistency_lora = 'flux\f2k_9B_小志一致性（0.5-0.7）lcs_consist_0412预览版preview.safetensors'
+seedvr_dit = "seedvr2_ema_3b_fp8_e4m3fn.safetensors"
+seedvr_vae = "ema_vae_fp16.safetensors"
+
+[limits]
+session_days = 14
+user_quota_mb = 20480
+image_upload_mb = 50
+chat_video_upload_mb = 500
+queued_tasks_per_user = 3
+images_per_user_task = 4
+images_per_admin_task = 8

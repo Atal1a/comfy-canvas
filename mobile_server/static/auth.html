@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070914">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Comfy Canvas">
+  <title>登录 · Comfy Canvas</title>
+  <link rel="manifest" href="/static/manifest-fraunces-v1.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/fraunces-touch-v1-180.png">
+  <link rel="icon" sizes="32x32" href="/static/icons/fraunces-favicon-v2-32.png" type="image/png">
+  <link rel="icon" sizes="64x64" href="/static/icons/fraunces-favicon-v2-64.png" type="image/png">
+  <link rel="icon" sizes="192x192" href="/static/icons/fraunces-app-v1-192.png" type="image/png">
+  <link rel="shortcut icon" href="/static/icons/fraunces-favicon-v2-64.png" type="image/png">
+  <link rel="stylesheet" href="/static/style.css?v=109">
+  <link rel="stylesheet" href="/static/interface.css?v=60">
+</head>
+<body class="canvas-ui auth-body">
+  <main class="auth-shell">
+    <header><img class="brand-mark" src="/static/brand-icon.svg" alt=""><div><p class="eyebrow">COMFY CANVAS</p><h1 id="auth-title">登录</h1></div></header>
+    <form id="auth-form" class="step-panel">
+      <label id="invite-field" hidden><span>邀请码</span><input id="auth-invite" autocomplete="one-time-code"></label>
+      <label><span>用户名</span><input id="auth-username" autocomplete="username" required maxlength="32"></label>
+      <label><span>密码</span><input id="auth-password" type="password" autocomplete="current-password" required minlength="10" maxlength="128"></label>
+      <label id="confirm-field" hidden><span>确认密码</span><input id="auth-confirm" type="password" autocomplete="new-password" minlength="10" maxlength="128"></label>
+      <button id="auth-submit" type="submit">登录</button>
+      <p id="auth-status" class="status" aria-live="polite"></p>
+    </form>
+    <p class="auth-switch"><span id="auth-switch-copy">收到邀请码？</span> <a id="auth-switch-link" href="/register">注册账号</a></p>
+  </main>
+  <script src="/static/auth.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Comfy Canvas</title>
+  <desc id="desc">A bold italic Fraunces letter C on a blue and violet gradient.</desc>
+  <defs>
+    <linearGradient id="surface" x1="128" y1="96" x2="896" y2="944" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d5ebff"/>
+      <stop offset="0.52" stop-color="#8fbfff"/>
+      <stop offset="1" stop-color="#9a8cf2"/>
+    </linearGradient>
+    <radialGradient id="highlight" cx="0" cy="0" r="1" gradientTransform="translate(270 188) rotate(47) scale(760)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.42"/>
+      <stop offset="0.62" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#surface)"/>
+  <rect width="1024" height="1024" fill="url(#highlight)"/>
+  <path d="M1243 479Q1267 470 1276.5 438.5Q1286 407 1250 345Q1197 228 1106.0 145.0Q1015 62 896.5 18.0Q778 -26 641 -26Q457 -26 322.0 55.5Q187 137 129.0 296.0Q71 455 117 687Q150 853 227.0 989.0Q304 1125 413.5 1223.5Q523 1322 654.0 1375.0Q785 1428 925 1428Q991 1428 1037.0 1415.0Q1083 1402 1114.0 1384.5Q1145 1367 1167.0 1354.0Q1189 1341 1208 1341Q1227 1341 1247.5 1354.0Q1268 1367 1288.5 1383.5Q1309 1400 1330.0 1413.0Q1351 1426 1372 1426Q1404 1426 1424.0 1407.5Q1444 1389 1443 1356L1424 961Q1423 924 1400.5 907.0Q1378 890 1346 890Q1283 890 1260 959L1243 1017Q1206 1155 1147.0 1212.5Q1088 1270 1002 1270Q941 1270 883.0 1235.5Q825 1201 775.0 1134.0Q725 1067 685.0 969.0Q645 871 619 745Q577 542 594.0 423.5Q611 305 669.5 254.5Q728 204 810 204Q862 204 914.5 226.5Q967 249 1019.0 297.5Q1071 346 1119 422Q1158 461 1186.5 475.5Q1215 490 1243 479Z" fill="#101834" transform="translate(120.1915 868.7675) scale(0.508941 -0.508941)"/>
+</svg>

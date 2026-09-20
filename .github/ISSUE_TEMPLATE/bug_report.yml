@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible application or deployment problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Affected workflow
+      options:
+        - Application / deployment
+        - Krea2 Identity Edit
+        - MiniMax H3
+        - Qwen Image Edit 2511
+        - Enhanced upscale
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Windows version, browser, Python, GPU and model names relevant to the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics (optional)
+      description: Relevant error messages or doctor output, with personal information removed.
+      render: shell

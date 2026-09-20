@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070914">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Comfy Canvas">
+  <title>Comfy Canvas</title>
+  <link rel="manifest" href="/static/manifest-fraunces-v1.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/fraunces-touch-v1-180.png">
+  <link rel="icon" sizes="32x32" href="/static/icons/fraunces-favicon-v2-32.png" type="image/png">
+  <link rel="icon" sizes="64x64" href="/static/icons/fraunces-favicon-v2-64.png" type="image/png">
+  <link rel="icon" sizes="192x192" href="/static/icons/fraunces-app-v1-192.png" type="image/png">
+  <link rel="shortcut icon" href="/static/icons/fraunces-favicon-v2-64.png" type="image/png">
+  <link rel="stylesheet" href="/static/style.css?v=109">
+  <link rel="stylesheet" href="/static/chat-spacing.css?v=1">
+  <link rel="stylesheet" href="/static/mobile-media-guard.css?v=2">
+  <link rel="stylesheet" href="/static/chat-redesign.css?v=36">
+  <link rel="stylesheet" href="/static/interface.css?v=62">
+</head>
+<body class="canvas-ui">
+<div class="app-shell">
+  <aside class="side-nav">
+    <a class="brand" href="/" data-nav><img class="brand-mark" src="/static/brand-icon.svg" alt=""><span><strong>Comfy Canvas</strong></span></a>
+    <nav class="primary-nav" aria-label="主导航">
+      <a href="/" data-nav data-section="home"><span data-icon="house"></span>首页</a>
+      <a href="/create" data-nav data-section="create"><span data-icon="wand-sparkles"></span>生成</a>
+      <a href="/flux-upscale" data-nav data-section="flux-upscale"><span data-icon="maximize-2"></span>放大</a>
+      <a href="/history" data-nav data-section="history"><span data-icon="images"></span>历史</a>
+      <a href="/messages" data-nav data-section="messages"><span data-icon="message-circle"></span>消息 <b id="chat-nav-badge" class="nav-badge" hidden></b></a>
+      <a href="/settings" data-nav data-section="settings"><span data-icon="settings"></span>设置</a>
+    </nav>
+    <button id="desktop-account" class="account-chip ghost small" type="button"></button>
+  </aside>
+
+  <main class="app-main">
+    <section id="server-banner" class="server-banner" hidden><strong id="server-banner-title"></strong><span id="server-banner-copy"></span></section>
+    <header class="mobile-header"><a class="mobile-brand" href="/" data-nav><img class="brand-mark" src="/static/brand-icon.svg" alt=""><strong>Comfy Canvas</strong></a><span id="header-context" hidden></span><button id="mobile-account" class="account-chip ghost small" type="button"></button></header>
+
+    <section id="view-home" class="view">
+      <header id="home-greeting" class="home-masthead home-greeting" data-period="day"><small id="home-greeting-kicker">WELCOME BACK</small><h1><span id="home-greeting-text">欢迎回来</span><strong id="home-greeting-name"></strong></h1><div class="home-greeting-status"><p id="home-greeting-copy" aria-live="polite">继续把脑海里的画面带到画布上。</p><a id="home-greeting-messages" href="/messages" data-nav data-icon-after="arrow-right" hidden></a></div></header>
+      <section class="home-zone home-recent" aria-labelledby="home-recent-title">
+        <div class="home-zone-heading"><div><small>GALLERY</small><h2 id="home-recent-title">最近作品</h2></div><div class="home-gallery-actions"><a href="/history" data-nav class="text-link" data-icon-after="arrow-right">查看全部</a><div class="home-gallery-paging"><button id="home-gallery-prev" class="ghost small icon-only" type="button" aria-label="向前浏览作品" data-icon="arrow-left"></button><button id="home-gallery-next" class="ghost small icon-only" type="button" aria-label="向后浏览作品" data-icon="arrow-right"></button></div></div></div>
+        <div id="recent-gallery" class="recent-gallery" tabindex="0" aria-label="最近作品横向列表"></div>
+      </section>
+      <div class="home-secondary">
+        <section class="home-zone home-workflows" aria-labelledby="home-workflows-title"><div class="home-zone-heading"><div><small>CREATE</small><h2 id="home-workflows-title">创作工具</h2></div></div><div id="workflow-cards" class="workflow-cards"></div></section>
+        <section class="home-zone home-activity" aria-labelledby="home-activity-title"><div class="home-zone-heading"><div><small>STATUS</small><h2 id="home-activity-title">共享队列</h2></div><button id="home-refresh" class="ghost small" type="button" data-icon-before="refresh-cw">刷新</button></div><div id="activity-list" class="activity-list"></div></section>
+      </div>
+    </section>
+
+    <section id="view-flux-upscale" class="view" hidden>
+      <header class="page-heading flux-page-heading"><div><h1>Flux 高清放大</h1><p>分块增强纹理并输出高分辨率图片。</p></div></header>
+      <form id="flux-upscale-form" class="step-panel flux-flow-panel">
+        <div class="panel-heading"><div><small>INPUT</small><h2>图片与放大设置</h2></div><button id="flux-help" class="page-help-trigger ghost small" type="button" hidden>说明</button></div>
+        <div class="flux-workbench">
+          <section class="flux-media-pane">
+            <label id="flux-upload-field" class="upload-drop-zone"><span class="upload-drop-heading">待放大图片 <small class="desktop-upload-hint">可拖放，或复制图片后按 Ctrl+V</small></span><span class="upload-picker"><span class="upload-picker-button">选择图片</span><small id="flux-upload-name">未选择图片</small></span><input id="flux-upscale-image" class="upload-file-input" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+            <section id="flux-upscale-preview" class="upload-preview" hidden><div class="preview-heading"><span>原图预览</span><small id="flux-upscale-filename"></small><div class="preview-actions"><button id="flux-image-crop" class="ghost small" type="button">裁切</button><button id="flux-image-replace" class="ghost small" type="button">更换</button><button id="flux-image-clear" class="ghost small" type="button">移除</button></div></div><img id="flux-upscale-preview-image" alt="Flux 放大原图预览"></section>
+          </section>
+          <aside class="flux-settings-pane">
+            <div class="flow-section-heading"><small>SETTINGS</small><h2>放大参数</h2></div>
+            <div class="control-grid">
+              <label class="control"><span>目标长边</span><select id="flux-upscale-resolution"><option value="2048">2K</option><option value="3072">3K</option><option value="4096" selected>4K</option></select></label>
+              <label class="control"><span>图片类型</span><select id="flux-upscale-style-profile"><option value="realistic_detail" selected>写实细节</option><option value="realistic_soft">写实柔和</option><option value="anime">二次元 / 插画</option></select></label>
+              <label class="control"><span>一致性 LoRA 强度</span><input id="flux-upscale-strength" type="number" min="0.4" max="0.9" step="0.05" value="0.7"></label>
+              <label class="control"><span>胶片颗粒</span><input id="flux-upscale-grain" type="number" min="0" max="0.5" step="0.05" value="0.2"></label>
+            </div>
+            <p class="output-note">皮肤纹理过强时可选“写实柔和”；线稿、赛璐璐和插画请选择“二次元 / 插画”。分辨率越高，处理时间和显存占用越大。</p>
+          </aside>
+        </div>
+        <div class="step-actions"><button id="flux-upscale-stop" class="danger" type="button" hidden>停止当前任务</button><button id="flux-upscale-submit" type="submit">开始 Flux 放大</button></div>
+      </form>
+      <p id="flux-upscale-status" class="status" aria-live="polite"></p>
+      <div id="flux-upscale-progress" class="job-progress flux-stage-progress" hidden><div><span id="flux-upscale-progress-label"></span><strong id="flux-upscale-progress-value"></strong></div><div class="progress-track"><span id="flux-upscale-progress-fill"></span></div><ol id="flux-upscale-progress-stages" class="flux-progress-stages" aria-label="Flux 高清放大处理阶段"></ol></div>
+      <section id="flux-upscale-result-section" class="section-block" hidden><div class="section-heading"><div><p class="section-kicker">RESULT</p><h2>原图与放大结果</h2></div></div><div id="flux-upscale-result"></div></section>
+      <section class="section-block"><div class="section-heading"><div><p class="section-kicker">RECENT</p><h2>最近的 Flux 放大</h2></div><button id="flux-upscale-refresh" class="ghost small" type="button">刷新</button></div><div id="flux-upscale-recent" class="history-grid"></div></section>
+    </section>
+
+    <section id="view-create" class="view" hidden>
+      <header class="page-heading"><div><h1>创建任务</h1></div><div class="step-indicator"><span data-step-dot="1">1</span><i></i><span data-step-dot="2">2</span></div></header>
+      <form id="job-form">
+        <section id="create-step-1" class="step-panel create-flow-panel">
+          <div class="panel-heading"><div><small>STEP 1</small><h2 id="create-content-title">图片与编辑要求</h2></div><button id="step-1-help" class="page-help-trigger ghost small" type="button" hidden>说明</button></div>
+          <div class="create-workbench">
+            <section class="create-media-pane">
+              <section id="krea-reference-mode-panel" class="krea-reference-mode-panel" hidden><label class="control">图片用途<select id="krea-reference-mode-entry"><option value="edit">原图编辑</option><option value="identity">身份重塑</option><option value="dual_reference">双参考图（场景 + 人物）</option></select></label><small>先选择图片用途；双参考图会显示场景参考图和人物参考图两个入口。</small></section>
+              <label id="image-field" class="upload-drop-zone" hidden><span class="upload-drop-heading">参考图片 <small class="desktop-upload-hint">可拖放，或复制图片后按 Ctrl+V</small></span><span class="upload-picker"><span class="upload-picker-button">选择图片</span><small id="image-upload-name">未选择图片</small></span><input id="image" class="upload-file-input" name="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+              <section id="upload-preview" class="upload-preview" hidden><div class="preview-heading"><span>参考图预览</span><small id="preview-filename"></small><div class="preview-actions"><button id="image-crop" class="ghost small" type="button">裁切</button><button id="image-replace" class="ghost small" type="button">更换</button><button id="image-clear" class="ghost small" type="button">移除</button></div></div><img id="upload-preview-image" alt="参考图片预览"></section>
+              <section id="reference-image-panel" class="reference-image-panel" hidden>
+                <p><strong>人物参考图</strong><small>第一张图片提供场景，这张图片提供要放入场景的人物或主体。</small></p>
+                <label id="reference-image-field" class="upload-drop-zone"><span class="upload-drop-heading">选择人物参考图 <small class="desktop-upload-hint">支持 JPEG、PNG、WebP</small></span><span class="upload-picker"><span class="upload-picker-button">选择图片</span><small id="reference-image-upload-name">未选择图片</small></span><input id="reference-image" class="upload-file-input" name="reference_image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+                <section id="reference-upload-preview" class="upload-preview" hidden><div class="preview-heading"><span>人物参考图预览</span><small id="reference-preview-filename"></small><div class="preview-actions"><button id="reference-image-replace" class="ghost small" type="button">更换</button><button id="reference-image-clear" class="ghost small" type="button">移除</button></div></div><img id="reference-upload-preview-image" alt="人物或主体参考图预览"></section>
+              </section>
+            </section>
+            <section class="create-editor-pane">
+              <div class="create-meta-grid">
+                <label><span>工作流</span><select id="workflow" name="workflow"></select></label>
+                <label><span>任务标题（可选）</span><input id="job-title" name="title" type="text" maxlength="80" placeholder="留空时使用工作流名称"></label>
+              </div>
+              <section id="h3-mode-field" class="h3-mode-field" hidden>
+                <input id="h3-mode" name="mode" type="hidden" value="t2v">
+                <div><strong>生成方式</strong><small>先选择是否使用首帧图片</small></div>
+                <div class="h3-mode-options" role="group" aria-label="MiniMax H3 生成方式">
+                  <button type="button" data-h3-mode="t2v" aria-pressed="true"><strong>文生视频</strong><small>仅使用提示词</small></button>
+                  <button type="button" data-h3-mode="i2v" aria-pressed="false"><strong>图生视频</strong><small>上传首帧图片</small></button>
+                </div>
+              </section>
+              <p id="workflow-description" class="workflow-description" hidden></p>
+              <section id="rerun-notice" class="notice" hidden><div><strong>正在使用历史任务内容</strong><small id="rerun-copy">已保留原图和提示词；切换到 <span id="rerun-workflow-name"></span> 时会使用该工作流的默认参数。</small></div><button id="rerun-cancel" class="ghost small" type="button">取消重跑</button></section>
+              <div class="create-prompt-flow">
+                <section id="prompt-template-tools" class="template-quick" hidden><label><span>提示词模板</span><select id="prompt-template"><option value="">选择提示词模板…</option></select></label><div><button id="template-replace" class="ghost small" type="button">替换</button><button id="template-append" class="ghost small" type="button">追加</button><a href="/settings/templates" data-nav class="text-link">管理</a></div></section>
+                <label><span id="prompt-label">提示词</span><textarea id="prompt" name="prompt" rows="7" maxlength="6000" required placeholder="描述需要怎样编辑图片…"></textarea></label>
+              </div>
+              <label><span>负面提示词（可选）</span><textarea id="negative-prompt" name="negative_prompt" rows="4" maxlength="2000" placeholder="填写不希望出现的内容；留空则不额外添加…"></textarea></label>
+            </section>
+          </div>
+          <div class="step-actions"><span></span><button id="step-next" type="button">下一步：设置参数</button></div>
+        </section>
+
+        <section id="create-step-2" class="step-panel create-flow-panel" hidden>
+          <div class="panel-heading"><div><small>STEP 2</small><h2 id="create-parameter-title">参数与 LoRA</h2></div><div class="panel-heading-actions"><button id="step-2-help" class="page-help-trigger ghost small" type="button" hidden>说明</button><button id="edit-content" class="ghost small" type="button">返回修改</button></div></div>
+          <section class="draft-summary create-context-bar"><img id="summary-image" alt="参考图摘要"><div><strong id="summary-workflow"></strong><p id="summary-prompt"></p></div></section>
+          <section id="krea-size-presets" class="size-presets" hidden><div><strong>画幅比例</strong><small id="krea-size-summary">1920 × 1080 · 2.07 MP</small></div><div><button class="ghost small" type="button" data-ratio="free">自由</button><button class="ghost small" type="button" data-ratio="1:1">1:1</button><button class="ghost small" type="button" data-ratio="3:4">3:4</button><button class="ghost small" type="button" data-ratio="4:3">4:3</button><button class="ghost small" type="button" data-ratio="2:3">2:3</button><button class="ghost small" type="button" data-ratio="3:2">3:2</button><button class="ghost small" type="button" data-ratio="9:16">9:16</button><button class="ghost small" type="button" data-ratio="16:9">16:9</button></div></section>
+          <div id="controls"></div>
+          <section class="lora-section"><div class="lora-section-heading"><div><h2 id="lora-title"></h2><small id="lora-family"></small></div><button id="lora-guide-open" class="ghost small" type="button">LoRA 说明</button></div><div id="loras" class="lora-grid"></div></section>
+          <div class="step-actions"><button id="step-back" class="ghost" type="button">上一步</button><button id="submit" type="submit">开始生成</button></div>
+        </section>
+      </form>
+      <p id="status" class="status" aria-live="polite"></p>
+      <div id="job-progress" class="job-progress" hidden><div><span id="progress-label"></span><strong id="progress-value"></strong></div><div class="progress-track"><span id="progress-fill"></span></div></div>
+    </section>
+
+    <section id="view-history" class="view" hidden>
+      <header class="page-heading"><div><h1>历史记录</h1></div><div class="history-heading-actions"><a id="history-recycle-open" class="ghost history-icon-button" href="/history/trash" data-nav aria-label="打开回收站" title="回收站" data-icon="trash-2"></a><button id="history-refresh" class="ghost history-icon-button" type="button" aria-label="刷新历史记录" title="刷新" data-icon="refresh-cw"></button></div></header>
+      <section id="device-task-history" class="device-task-history" hidden>
+        <div class="section-heading"><div><p class="section-kicker">THIS DEVICE</p><h2>本设备最近任务</h2></div><button id="device-task-history-clear" class="ghost small" type="button">清除已查看</button></div>
+        <div id="device-task-history-list" class="device-task-history-list"></div>
+      </section>
+      <div class="filter-bar"><select id="history-workflow-filter" aria-label="工作流筛选"><option value="">全部工作流</option></select><select id="collection-filter" aria-label="收藏夹筛选"></select><select id="history-sort" aria-label="历史记录排序"><option value="newest">最新在前</option><option value="oldest">最早在前</option><option value="title_asc">标题 A–Z</option><option value="title_desc">标题 Z–A</option></select></div>
+      <div id="gallery" class="history-grid"></div>
+      <button id="load-more" class="ghost load-more" type="button" hidden>加载更多</button>
+    </section>
+
+    <section id="view-recycle-bin" class="view" hidden>
+      <header class="page-heading"><div><a class="back-link" href="/history" data-nav data-icon-before="arrow-left">返回历史</a><p class="eyebrow">RECYCLE BIN</p><h1>回收站</h1><p>删除的任务和图片会保留 15 分钟，到期后自动永久清理。</p></div></header>
+      <div id="recycle-list" class="recycle-list"></div>
+      <p id="recycle-status" class="status" aria-live="polite"></p>
+    </section>
+
+    <section id="view-messages" class="view" hidden>
+      <header class="page-heading chat-page-heading"><div><p class="eyebrow">PRIVATE MESSAGES</p><h1>消息</h1></div><button id="chat-add-friend" type="button" data-icon-before="user-plus">添加好友</button></header>
+      <div class="chat-shell">
+        <aside class="chat-sidebar"><div class="chat-sidebar-heading"><strong>对话</strong><div class="chat-sidebar-actions"><button id="chat-add-friend-mobile" class="ghost small" type="button" data-icon-before="user-plus">添加好友</button><button id="chat-requests-open" class="ghost small" type="button" data-icon-before="message-circle">好友请求 <b id="chat-request-badge" hidden></b></button></div></div><div id="chat-conversation-list" class="chat-conversation-list"></div></aside>
+        <section id="chat-thread" class="chat-thread"><div id="chat-thread-empty" class="chat-thread-empty"><strong>选择一位好友</strong><p>发送文字，或分享自己的图片、视频与生成任务。</p></div><header id="chat-thread-header" hidden><button id="chat-thread-back" class="ghost small" type="button" aria-label="返回对话列表" data-icon="arrow-left"></button><button id="chat-peer-open" class="chat-peer-open" type="button"><span id="chat-peer-avatar" class="chat-avatar"></span><span class="chat-peer-copy"><strong id="chat-peer-name"></strong><small id="chat-peer-state"></small></span><b aria-hidden="true" data-icon="chevron-right"></b></button></header><button id="chat-load-older" class="ghost small chat-load-older" type="button" hidden data-icon-before="clock">加载更早消息</button><div id="chat-message-list" class="chat-message-list"></div><form id="chat-composer" hidden><div id="chat-media-draft" class="chat-media-draft" hidden></div><div class="chat-compose-row"><textarea id="chat-message-input" maxlength="4000" rows="1" placeholder="输入消息…"></textarea><div class="chat-compose-actions"><input id="chat-media-input" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" multiple hidden><button id="chat-media-pick" class="ghost chat-icon-button" type="button" aria-label="上传图片或视频" data-icon="image-plus"></button><button id="chat-share-history" class="ghost" type="button" data-icon-before="share-2">分享任务</button><button type="submit" data-icon-before="send">发送</button></div></div><div id="chat-upload-progress" class="chat-upload-progress" hidden><span><b></b></span><small>正在上传 0%</small><button id="chat-upload-cancel" class="ghost small" type="button">取消</button></div><small id="chat-composer-note"></small></form></section>
+      </div>
+      <p id="chat-status" class="status" aria-live="polite"></p>
+    </section>
+
+    <section id="view-detail" class="view" hidden>
+      <section id="photo-detail-experience" class="photo-detail-experience" hidden aria-label="高清媒体浏览">
+        <header class="photo-detail-topbar">
+          <a id="photo-detail-back" class="photo-detail-icon-button" href="/history" data-nav aria-label="返回历史" data-icon="arrow-left"></a>
+          <div id="photo-detail-actions" class="photo-detail-actions" role="toolbar" aria-label="媒体操作">
+            <span class="photo-detail-action-group photo-detail-action-group-left" role="group" aria-label="浏览操作">
+              <button id="photo-detail-compare" class="photo-detail-action" type="button" aria-label="对比" title="对比" data-icon="images"></button>
+              <button id="photo-detail-original" class="photo-detail-action" type="button" aria-label="载入原图" title="载入原图" data-icon="scan"></button>
+            </span>
+            <span class="photo-detail-action-group photo-detail-action-group-right" role="group" aria-label="图片管理">
+              <button id="photo-detail-info" class="photo-detail-action" type="button" aria-label="媒体信息" title="媒体信息" data-icon="circle-help"></button>
+              <button id="photo-detail-more" class="photo-detail-action" type="button" aria-label="更多操作" title="更多操作" data-icon="ellipsis"></button>
+              <button id="photo-detail-delete" class="photo-detail-action danger" type="button" aria-label="删除" title="删除" data-icon="trash-2"></button>
+            </span>
+          </div>
+          <div class="photo-detail-heading"><strong id="photo-detail-title">媒体详情</strong><small id="photo-detail-counter">1 / 1</small></div>
+          <button id="photo-detail-rerun" class="photo-detail-icon-button" type="button" aria-label="调整参数后重跑" data-icon="rotate-ccw"></button>
+        </header>
+        <main id="photo-detail-stage" class="photo-detail-stage" aria-label="媒体浏览区域">
+          <div id="photo-detail-track" class="photo-detail-track">
+            <div class="photo-detail-page" data-photo-slot="-2" aria-hidden="true"></div>
+            <div class="photo-detail-page" data-photo-slot="-1" aria-hidden="true"></div>
+            <div id="photo-detail-current" class="photo-detail-page photo-detail-current" data-photo-slot="0"></div>
+            <div class="photo-detail-page" data-photo-slot="1" aria-hidden="true"></div>
+            <div class="photo-detail-page" data-photo-slot="2" aria-hidden="true"></div>
+          </div>
+          <p id="photo-detail-empty" class="photo-detail-empty" hidden>这个任务还没有可浏览的媒体。</p>
+        </main>
+        <nav id="photo-detail-thumbs" class="photo-detail-thumbs" aria-label="历史媒体"></nav>
+        <section id="photo-detail-video-controls" class="photo-detail-video-controls" aria-label="视频播放控制" hidden>
+          <button id="photo-detail-video-play" type="button" aria-label="播放" data-icon="play" disabled></button>
+          <div class="photo-detail-video-seek-zone">
+            <div class="photo-detail-video-times" aria-hidden="true"><output id="photo-detail-video-elapsed" for="photo-detail-video-seek">0:00</output><output id="photo-detail-video-remaining" for="photo-detail-video-seek">−--:--</output></div>
+            <label class="photo-detail-video-seek"><span>视频播放进度</span><input id="photo-detail-video-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="视频播放进度" disabled></label>
+          </div>
+          <button id="photo-detail-video-mute" type="button" aria-label="静音" data-icon="volume-2" disabled></button>
+          <small id="photo-detail-video-status" role="status" aria-live="polite"></small>
+        </section>
+        <div id="photo-detail-delete-menu" class="photo-detail-delete-menu" role="menu" aria-label="删除内容" hidden>
+          <button id="photo-detail-delete-task" class="danger" type="button" role="menuitem"><strong>删除整个任务</strong><small>同时删除任务中的全部媒体</small></button>
+          <button id="photo-detail-delete-image" class="danger" type="button" role="menuitem"><strong>仅删除当前媒体</strong><small>保留任务中的其他媒体</small></button>
+          <small id="photo-detail-delete-message" class="photo-detail-delete-message"></small>
+        </div>
+      </section>
+      <header class="detail-header"><a class="back-link" href="/history" data-nav data-icon-before="arrow-left">返回历史</a><div class="detail-title-row"><h1 id="detail-title">生成详情</h1><div class="detail-actions"><button id="detail-share" class="ghost" type="button" hidden data-icon-before="share-2">分享给好友</button><button id="detail-rename" class="ghost" type="button" data-icon-before="pencil">修改标题</button><a id="detail-rerun" class="button-link" href="/create" data-icon-before="rotate-ccw">调整参数后重跑</a></div></div><div class="detail-prompts"><article id="detail-source-prompt-card" class="prompt-card source" hidden><small>强化前提示词</small><p id="detail-source-prompt"></p></article><article class="prompt-card positive"><small>正面提示词</small><p id="detail-prompt" class="detail-prompt"></p></article><article id="detail-negative-card" class="prompt-card negative" hidden><small>负面提示词</small><p id="detail-negative" class="detail-negative"></p></article></div><section id="detail-params" class="detail-parameter-panel" aria-label="生成参数"></section></header>
+      <p id="detail-status" class="status"></p><div id="detail-workspace" class="detail-workspace"><section id="source-panel" class="source-panel"></section><section class="detail-results-section"><h2>生成结果</h2><section id="detail-images" class="detail-images"></section></section></div>
+    </section>
+
+    <section id="view-settings" class="view" hidden>
+      <header class="page-hero compact"><h1>设置</h1><p>管理模板、收藏、存储和账号。</p></header>
+      <div class="settings-cards">
+        <a href="/settings/account" data-nav><span data-icon="user"></span><div><strong>账户与个人资料</strong><small>头像、用户名、密码与登录状态</small></div><b data-icon="chevron-right"></b></a>
+        <a href="/settings/templates" data-nav><span data-icon="file-text"></span><div><strong>提示词模板</strong><small>创建、编辑和删除常用模板</small></div><b data-icon="chevron-right"></b></a>
+        <a id="tips-settings-link" href="/settings/help" data-nav hidden><span data-icon="circle-help"></span><div><strong>帮助与 LoRA 说明</strong><small>管理工作流、参数和 LoRA 的简明说明</small></div><b data-icon="chevron-right"></b></a>
+        <a href="/settings/collections" data-nav><span data-icon="folder-heart"></span><div><strong>收藏夹</strong><small>整理历史任务和收藏分类</small></div><b data-icon="chevron-right"></b></a>
+        <a href="/settings/storage" data-nav><span data-icon="hard-drive"></span><div><strong>存储管理</strong><small>按工作流清理输出与历史</small></div><b data-icon="chevron-right"></b></a>
+        <a id="admin-settings-link" href="/settings/admin" data-nav hidden><span data-icon="shield-check"></span><div><strong>用户与邀请</strong><small>管理账号、邀请码和共享队列</small></div><b data-icon="chevron-right"></b></a>
+      </div>
+    </section>
+
+    <section id="view-account" class="view" hidden>
+      <header class="page-heading"><div><a class="back-link" href="/settings" data-nav data-icon-before="arrow-left">设置</a><p class="eyebrow">ACCOUNT</p><h1>账户与个人资料</h1><p>管理别人看到的身份信息与账户安全。</p></div></header>
+      <div class="account-settings-layout">
+        <section class="account-profile-card">
+          <div id="account-avatar-preview" class="account-avatar-preview"></div>
+          <div class="account-profile-copy"><small>当前账户</small><h2 id="account-profile-name"></h2><p><span id="account-role-badge"></span><span id="account-storage-summary">正在统计存储…</span></p></div>
+          <div class="account-avatar-actions"><input id="account-avatar-input" type="file" accept="image/jpeg,image/png,image/webp" hidden><button id="account-avatar-change" type="button" data-icon-before="camera">更换头像</button><button id="account-avatar-remove" class="ghost" type="button" data-icon-before="trash-2">移除</button></div>
+        </section>
+        <section class="account-setting-card"><header><span data-icon="user"></span><div><h2>用户名</h2><p>同时用于登录、好友搜索和聊天显示，可直接修改。</p></div></header><form id="account-profile-form"><label><span>新用户名</span><input id="account-username" name="username" minlength="2" maxlength="32" autocomplete="username" required></label><p id="account-profile-status" class="status" aria-live="polite"></p><button type="submit" data-icon-before="check">保存用户名</button></form></section>
+        <section class="account-setting-card"><header><span data-icon="lock"></span><div><h2>修改密码</h2><p>更新后保留当前设备，其他设备会退出登录。</p></div></header><form id="account-password-form"><label><span>当前密码</span><input id="account-current-password" type="password" autocomplete="current-password" required></label><label><span>新密码</span><input id="account-new-password" type="password" minlength="10" maxlength="128" autocomplete="new-password" required></label><label><span>确认新密码</span><input id="account-confirm-password" type="password" minlength="10" maxlength="128" autocomplete="new-password" required></label><p id="account-password-status" class="status" aria-live="polite"></p><button type="submit" data-icon-before="lock">更新密码</button></form></section>
+        <section class="account-setting-card account-session-card"><header><span data-icon="shield-check"></span><div><h2>登录状态</h2><p>在共享设备上使用后，记得退出当前设备。</p></div></header><div><button id="account-logout-all" class="ghost" type="button" data-icon-before="log-out">退出全部设备</button><button id="account-logout" class="danger" type="button" data-icon-before="log-out">退出当前设备</button></div></section>
+      </div>
+      <p id="account-avatar-status" class="status account-page-status" aria-live="polite"></p>
+    </section>
+
+    <section id="view-templates" class="view" hidden><header class="page-heading"><div><a class="back-link" href="/settings" data-nav data-icon-before="arrow-left">设置</a><p class="eyebrow">PROMPT LIBRARY</p><h1>提示词模板</h1></div><button id="template-new" type="button" data-icon-before="plus">新建模板</button></header><div class="split-manager"><div id="template-list" class="manager-list"></div><form id="template-form" class="editor-panel"><input id="template-id" type="hidden"><label><span>模板名称</span><input id="template-name" maxlength="40"></label><label><span>模板内容</span><textarea id="template-text" rows="13" maxlength="6000"></textarea></label><p id="template-status" class="status"></p><div class="editor-actions"><button id="template-delete" class="danger" type="button" data-icon-before="trash-2">删除</button><button type="submit">保存模板</button></div></form></div></section>
+
+    <section id="view-tips" class="view" hidden>
+      <header class="page-heading"><div><a class="back-link" href="/settings" data-nav data-icon-before="arrow-left">设置</a><h1>说明管理</h1><p>集中维护页面引导与 LoRA 资料。</p></div></header>
+      <nav class="admin-help-tabs" aria-label="说明类型" role="tablist"><button id="admin-help-tab-pages" type="button" role="tab" aria-selected="true" aria-controls="admin-page-help" data-help-tab="pages" class="active">页面说明</button><button id="admin-help-tab-loras" type="button" role="tab" aria-selected="false" aria-controls="admin-lora-help" data-help-tab="loras">LoRA 说明</button></nav>
+      <section id="admin-page-help" class="admin-help-pane" role="tabpanel" aria-labelledby="admin-help-tab-pages">
+        <div class="admin-page-toolbar"><label><span>工作流 / 工具</span><select id="page-help-target"></select></label><small>选择需要维护的页面，再从工作台中切换对应步骤。</small></div>
+        <div class="admin-help-workspace admin-page-help-workspace"><section class="admin-help-stage-pane"><div class="admin-help-list-summary"><strong>页面阶段</strong><small id="page-help-stage-count">0 个阶段</small></div><div id="page-help-stages" class="stage-picker"></div></section>
+          <div id="page-help-editor-shell" class="page-help-editor-shell" role="dialog" aria-modal="false" aria-hidden="false" aria-labelledby="page-help-editor-label"><button id="page-help-backdrop" class="page-help-backdrop" type="button" aria-label="关闭编辑面板"></button><form id="page-help-form" class="editor-panel page-help-form"><input id="page-help-stage" type="hidden"><div class="editor-title page-help-editor-title"><div><small>PAGE GUIDE</small><strong id="page-help-editor-label">选择一个页面</strong></div><div class="page-help-heading-actions"><label class="switch-line">启用 <input id="page-help-enabled" type="checkbox" checked></label><button id="page-help-close" class="ghost small" type="button">关闭</button></div></div><label><span>标题</span><input id="page-help-title" maxlength="60" required></label><label><span>说明内容</span><textarea id="page-help-body" rows="8" maxlength="4000" required></textarea></label><section class="help-live-preview"><small>用户看到的效果</small><h3 id="page-help-preview-title"></h3><p id="page-help-preview-body"></p></section><p id="page-help-status" class="status"></p><button type="submit">保存页面说明</button></form></div>
+        </div>
+      </section>
+      <section id="admin-lora-help" class="admin-help-pane" role="tabpanel" aria-labelledby="admin-help-tab-loras" hidden>
+        <details class="lora-category-manager"><summary><span><strong>分类管理</strong><small>所有模型系列共用，按需展开维护。</small></span><b id="lora-category-count">0 个分类</b></summary><div class="lora-category-manager-body"><form id="lora-category-new-form"><input id="lora-category-new-name" maxlength="30" placeholder="新分类名称" aria-label="新分类名称" required><button class="small" type="submit" data-icon-before="plus">新增</button></form><div id="lora-category-admin-list" class="lora-category-admin-list"></div><p id="lora-category-status" class="status"></p></div></details>
+        <div class="lora-catalog-heading"><div><strong>LoRA 资料库</strong><small>筛选后选择条目，在右侧维护说明和推荐强度。</small></div></div>
+        <div class="admin-lora-toolbar"><label><span>模型系列</span><select id="lora-meta-family-filter"><option value="">全部系列</option></select></label><label><span>分类</span><select id="lora-meta-category-filter"><option value="all">全部分类</option><option value="uncategorized">未分类</option></select></label><label><span>搜索</span><input id="lora-meta-search" type="search" placeholder="名称或说明"></label><label><span>资料状态</span><select id="lora-meta-status-filter"><option value="all">全部状态</option><option value="described">已有说明</option><option value="undescribed">待补充</option><option value="stale">文件已失效</option></select></label></div>
+        <p id="lora-scan-summary" class="lora-scan-summary" role="status"></p>
+        <div class="split-manager lora-admin-layout admin-help-workspace">
+          <section class="lora-admin-list-pane"><div class="lora-admin-list-summary"><strong id="lora-meta-result-count">0 个 LoRA</strong><small id="lora-meta-described-count">0 个已有说明</small></div><div id="lora-meta-list" class="manager-list"></div></section>
+          <div id="lora-meta-editor-shell" class="lora-meta-editor-shell" role="dialog" aria-modal="false" aria-hidden="false" aria-labelledby="lora-meta-title"><button id="lora-meta-backdrop" class="lora-meta-backdrop" type="button" aria-label="关闭编辑面板"></button><form id="lora-meta-form" class="editor-panel sticky-editor lora-meta-form"><input id="lora-meta-name" type="hidden"><input id="lora-meta-family" type="hidden"><div class="editor-title lora-meta-editor-title"><div class="lora-meta-heading"><small>LORA PROFILE</small><div class="lora-meta-title-line"><strong id="lora-meta-title">选择一个 LoRA</strong><button id="lora-meta-rename-open" class="ghost small" type="button" disabled data-icon-before="pencil">改名</button></div><small id="lora-meta-path" class="lora-meta-path"></small><div id="lora-meta-rename-editor" class="lora-meta-rename-editor" hidden><div class="lora-meta-rename-field"><input id="lora-meta-rename-input" maxlength="160" autocomplete="off" aria-label="新的 LoRA 文件名"><span>.safetensors</span></div><button id="lora-meta-rename-confirm" class="small" type="button">确认</button><button id="lora-meta-rename-cancel" class="ghost small" type="button">取消</button></div></div><button id="lora-meta-close" class="ghost small" type="button" data-icon-before="x">关闭</button></div><section class="lora-meta-section"><header><strong>说明资料</strong><small>用于用户端的 LoRA 选择与说明面板。</small></header><label><span>分类</span><select id="lora-meta-category"><option value="">未分类</option></select></label><label><span>说明</span><textarea id="lora-meta-description" rows="8" placeholder="用途、风格特点、适合场景……"></textarea></label></section><section class="lora-meta-section"><header><strong>推荐强度</strong><small>提示建议范围，不会限制用户实际输入。</small></header><div class="tip-meta-grid"><label><span>最小值</span><input id="lora-meta-min" type="number" min="-15" max="15" step="0.05"></label><label><span>最大值</span><input id="lora-meta-max" type="number" min="-15" max="15" step="0.05"></label></div></section><section class="lora-meta-section lora-meta-visibility"><div><strong>用户端可见</strong><small>关闭后仍保留资料，但不在用户端 LoRA 列表显示。</small></div><label class="check-control lora-meta-enabled-row"><span>显示</span><input id="lora-meta-enabled" type="checkbox" checked></label></section><p id="lora-meta-status" class="status"></p><div class="lora-meta-form-actions"><button id="lora-meta-delete" class="danger" type="button" hidden data-icon-before="trash-2">删除失效条目</button><button type="submit" data-icon-before="check">保存说明</button></div></form></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="view-collections" class="view" hidden><header class="page-heading"><div><a class="back-link" href="/settings" data-nav data-icon-before="arrow-left">设置</a><p class="eyebrow">COLLECTIONS</p><h1>收藏夹</h1></div></header><form id="collection-create-form" class="inline-create"><input id="collection-name" maxlength="40" placeholder="新收藏夹名称"><button type="submit" data-icon-before="plus">添加</button></form><div id="collection-manager-list" class="manager-list wide"></div></section>
+
+    <section id="view-storage" class="view" hidden><header class="page-heading"><div><a class="back-link" href="/settings" data-nav data-icon-before="arrow-left">设置</a><p class="eyebrow">STORAGE</p><h1>存储管理</h1></div></header><p class="page-note">清理会删除对应工作流的手机端输出、历史记录和保留的原图，且无法恢复。</p><div id="storage-list" class="storage-list"></div></section>
+    <section id="view-admin" class="view" hidden>
+      <header class="page-heading"><div><a class="back-link" href="/settings" data-nav data-icon-before="arrow-left">设置</a><p class="eyebrow">ADMIN</p><h1>用户与邀请</h1></div><div class="admin-heading-actions"><button id="invite-create" type="button" data-icon-before="plus">生成邀请码</button></div></header>
+      <div id="admin-access-summary" class="admin-access-summary" aria-label="账号概览">
+        <article><span data-icon="users"></span><div><small>全部账号</small><strong id="admin-user-count">—</strong></div></article>
+        <article><span data-icon="user-check"></span><div><small>正常使用</small><strong id="admin-active-user-count">—</strong></div></article>
+        <article><span data-icon="key-round"></span><div><small>有效邀请</small><strong id="admin-active-invite-count">—</strong></div></article>
+        <article><span data-icon="hard-drive"></span><div><small>用户内容</small><strong id="admin-user-storage-total">—</strong></div></article>
+      </div>
+      <p class="security-note">手机与电脑连接同一局域网后，在浏览器打开启动窗口显示的 HTTP 地址。管理页面只显示账号、存储量和队列状态，不展示其他账号的提示词或图片。</p>
+      <section class="section-block admin-access-section"><div class="section-heading"><div><p class="section-kicker">INVITES</p><h2>邀请码</h2><small id="admin-invite-summary" class="section-caption">正在读取邀请状态…</small></div><label class="admin-compact-filter"><span>显示</span><select id="admin-invite-filter"><option value="active">有效邀请</option><option value="all">全部记录</option><option value="used">已使用</option><option value="inactive">已失效</option></select></label></div><div id="admin-invites" class="admin-invite-list"></div></section>
+      <section class="section-block admin-access-section"><div class="section-heading admin-user-heading"><div><p class="section-kicker">USERS</p><h2>账号与存储</h2><small id="admin-user-summary" class="section-caption">正在读取账号…</small></div><div class="admin-user-filters"><label><span data-icon="search"></span><input id="admin-user-search" type="search" autocomplete="off" placeholder="搜索用户名" aria-label="搜索用户名"></label><select id="admin-user-filter" aria-label="筛选账号"><option value="all">全部账号</option><option value="active">正常使用</option><option value="disabled">已停用</option><option value="admin">管理员</option></select></div></div><div id="admin-users" class="admin-user-list"></div></section>
+      <section class="section-block"><div class="section-heading"><div><p class="section-kicker">QUEUE</p><h2>共享队列状态</h2></div><button id="admin-refresh" class="ghost small" type="button" data-icon-before="refresh-cw">刷新</button></div><div id="performance-control" class="performance-control"><div><strong>电脑独占模式</strong><small>暂停所有共享服务任务，让 ComfyUI 保持可供电脑端使用。</small></div><button id="performance-toggle" class="danger" type="button">开启</button></div><div id="comfy-recovery-control" class="performance-control" hidden><div><strong>ComfyUI 保护冻结</strong><small id="comfy-recovery-message">检测到重复无响应。</small></div><button id="comfy-recovery-button" class="danger" type="button" data-icon-before="rotate-ccw">恢复 ComfyUI</button></div><div id="admin-activity" class="activity-list"></div></section>
+      <section class="section-block"><div class="section-heading"><div><p class="section-kicker">DIAGNOSTICS</p><h2>运行健康</h2></div><button id="admin-diagnostics-refresh" class="ghost small" type="button" data-icon-before="refresh-cw">重新检查</button></div><div id="admin-diagnostics" class="manager-list wide"><p class="status">正在读取运行状态…</p></div></section>
+    </section>
+  </main>
+
+  <div id="assistive-nav" class="assistive-nav side-right">
+    <nav id="assistive-menu" class="assistive-menu" aria-label="主导航" aria-hidden="true">
+      <a href="/" data-nav data-section="home"><span data-icon="house"></span><small>首页</small></a>
+      <a href="/create" data-nav data-section="create"><span data-icon="wand-sparkles"></span><small>生成</small></a>
+      <a href="/flux-upscale" data-nav data-section="flux-upscale"><span data-icon="maximize-2"></span><small>放大</small></a>
+      <a href="/history" data-nav data-section="history"><span data-icon="images"></span><small>历史</small></a>
+      <a href="/messages" data-nav data-section="messages"><span data-icon="message-circle"></span><small>消息</small><b id="assistive-message-badge" class="assistive-unread-dot" hidden aria-hidden="true"></b></a>
+      <a href="/settings" data-nav data-section="settings"><span data-icon="settings"></span><small>设置</small></a>
+    </nav>
+    <button id="assistive-toggle" class="assistive-toggle" type="button" aria-label="打开主导航" aria-controls="assistive-menu" aria-expanded="false"><span data-icon="menu"></span><b id="assistive-toggle-badge" class="assistive-unread-dot" hidden aria-hidden="true"></b></button>
+  </div>
+</div>
+
+<section id="global-task" class="global-task collapsed" hidden style="--overall-progress:0%">
+  <button id="global-task-open" class="global-task-open" type="button">
+    <span class="task-spinner" data-icon="loader-circle"></span>
+    <span class="global-task-compact"><b id="global-task-value">0/1</b><time id="global-task-time">00:00</time></span>
+    <span class="global-task-detail">
+      <strong id="global-task-title">正在生成</strong>
+      <small id="global-task-label"></small>
+      <span class="global-task-metrics">
+        <span><small id="global-task-overall-label">总图</small><b id="global-task-overall">0/1</b></span>
+        <span><small id="global-task-item-label">当前</small><b id="global-task-item">—/—</b></span>
+        <span><small id="global-task-third-label">总用时</small><b id="global-task-total-time">00:00</b></span>
+      </span>
+    </span>
+  </button>
+  <button id="global-task-stop" class="global-task-stop" type="button">停止</button>
+</section>
+
+<dialog id="collection-picker"><section class="dialog-panel"><h2>选择收藏夹</h2><div id="collection-choices" class="collection-choices"></div><div class="dialog-actions"><button id="picker-cancel" class="ghost" type="button">取消</button><button id="picker-apply" type="button">保存</button></div></section></dialog>
+
+<dialog id="confirm-dialog"><section class="dialog-panel"><h2>确认操作</h2><p id="confirm-message" class="dialog-message"></p><div class="dialog-actions"><button id="confirm-cancel" class="ghost" type="button">取消</button><button id="confirm-accept" class="danger" type="button">确认删除</button></div></section></dialog>
+<dialog id="account-dialog"><section class="dialog-panel"><h2 id="account-name"></h2><p id="account-storage" class="dialog-message"></p><div class="dialog-actions vertical"><button id="account-close" class="ghost" type="button">关闭</button><button id="logout-all" class="ghost" type="button">退出全部设备</button><button id="logout" class="danger" type="button">退出当前设备</button></div></section></dialog>
+<dialog id="invite-dialog"><section class="dialog-panel"><h2>一次性邀请码</h2><p id="invite-token" class="invite-token"></p><p class="dialog-message">邀请码仅显示这一次，默认 7 天内有效。</p><div class="dialog-actions"><button id="invite-copy" type="button" data-icon-before="copy">复制邀请码</button><button id="invite-close" class="ghost" type="button" data-icon-before="x">关闭</button></div></section></dialog>
+<dialog id="admin-user-dialog" class="admin-user-dialog"><section class="dialog-panel"><header><div class="admin-user-dialog-identity"><span id="admin-user-dialog-avatar" class="admin-user-avatar"></span><div><small>USER MANAGEMENT</small><h2 id="admin-user-dialog-name">管理账号</h2></div></div><button id="admin-user-dialog-close" class="ghost small icon-only" type="button" aria-label="关闭账号管理" title="关闭" data-icon="x"></button></header><div id="admin-user-dialog-meta" class="admin-user-dialog-meta"></div><form id="admin-user-password-form" class="admin-user-password-form"><label><span>设置新密码</span><input id="admin-user-password" type="password" minlength="10" autocomplete="new-password" placeholder="至少 10 位"></label><button type="submit" class="ghost" data-icon-before="key-round">重置密码</button></form><p id="admin-user-dialog-status" class="status" aria-live="polite"></p><div class="admin-user-dialog-actions"><button id="admin-user-toggle" class="ghost" type="button" data-icon-before="user-x">停用账号</button><button id="admin-user-delete" class="ghost" type="button" data-icon-before="user-minus">删除账号，保留内容</button><button id="admin-user-purge" class="danger" type="button" data-icon-before="trash-2">永久删除账号与内容</button></div></section></dialog>
+<dialog id="reuse-dialog"><section class="dialog-panel reuse-dialog-panel"><h2>用此图继续</h2><p id="reuse-dialog-source" class="dialog-message"></p><button id="reuse-qwen" type="button"><strong>Qwen 图片编辑</strong><small>把结果图作为新源图，填写新的编辑要求</small></button><button id="reuse-krea" class="ghost" type="button"><strong>Krea2 图生图</strong><small>用结果图继续生成或进行身份重塑</small></button><button id="reuse-h3" class="ghost" type="button"><strong>MiniMax H3 图生视频</strong><small>把结果图作为视频的 0.00 秒首帧</small></button><button id="reuse-rerun" class="ghost" type="button"><strong>按原设置再跑</strong><small>保留提示词和参数，提交前仍可调整</small></button><button id="reuse-close" class="ghost" type="button">取消</button></section></dialog>
+<dialog id="media-viewer" class="media-viewer"><section><header><strong id="media-viewer-title">查看大图</strong><div class="viewer-toolbar"><button id="media-zoom-out" class="ghost small icon-only" type="button" aria-label="缩小" title="缩小" data-icon="zoom-out"></button><button id="media-zoom-value" class="ghost small zoom-value" type="button">适应</button><button id="media-zoom-width" class="ghost small" type="button" data-icon-before="scan">适宽</button><button id="media-zoom-in" class="ghost small icon-only" type="button" aria-label="放大" title="放大" data-icon="zoom-in"></button><button id="media-zoom-actual" class="ghost small" type="button">100%</button><button id="media-viewer-close" class="ghost small icon-only" type="button" aria-label="关闭大图" title="关闭" data-icon="x"></button></div></header><div class="viewer-viewport"><img id="media-viewer-image" alt="大图预览"></div></section></dialog>
+<dialog id="detail-lightbox" class="detail-lightbox">
+  <section class="detail-lightbox-shell">
+    <header><div><small id="detail-lightbox-counter"></small><strong id="detail-lightbox-title">查看结果</strong></div><div class="viewer-toolbar"><span class="viewer-toolbar-group viewer-zoom-tools" aria-label="缩放工具"><button id="detail-zoom-out" class="ghost small icon-only" type="button" aria-label="缩小" title="缩小" data-icon="zoom-out"></button><button id="detail-zoom-value" class="ghost small zoom-value" type="button">适应</button><button id="detail-zoom-width" class="ghost small" type="button" data-icon-before="scan">适宽</button><button id="detail-zoom-in" class="ghost small icon-only" type="button" aria-label="放大" title="放大" data-icon="zoom-in"></button><button id="detail-zoom-actual" class="ghost small" type="button">100%</button></span><span class="viewer-toolbar-group viewer-panel-tools"><button id="detail-inspector-toggle" class="ghost small" type="button" aria-expanded="true" data-icon-before="panel-right-close">收起设置</button></span><button id="detail-lightbox-close" class="ghost small icon-only" type="button" aria-label="关闭结果查看器" title="关闭" data-icon="x"></button></div></header>
+    <div class="detail-lightbox-layout">
+      <main><div id="detail-lightbox-stage" class="detail-lightbox-stage"></div><button id="detail-lightbox-prev" class="detail-lightbox-page prev" type="button" aria-label="上一张" data-icon="chevron-left"></button><button id="detail-lightbox-next" class="detail-lightbox-page next" type="button" aria-label="下一张" data-icon="chevron-right"></button><div id="detail-lightbox-thumbs" class="detail-lightbox-thumbs"></div></main>
+      <aside id="detail-lightbox-inspector" class="detail-lightbox-inspector"></aside>
+    </div>
+  </section>
+</dialog>
+<dialog id="photo-detail-info-sheet" class="photo-detail-sheet"><button class="photo-detail-sheet-dimmer" type="button" tabindex="-1" aria-label="关闭媒体信息"></button><section><button class="photo-detail-sheet-grabber" type="button" aria-label="下滑或轻点关闭媒体信息"><span></span></button><header><div><small>DETAILS</small><h2>媒体信息</h2></div></header><div id="photo-detail-info-body" class="photo-detail-sheet-body"></div></section></dialog>
+<dialog id="photo-detail-action-sheet" class="photo-detail-sheet"><button class="photo-detail-sheet-dimmer" type="button" tabindex="-1" aria-label="关闭更多操作"></button><section><button class="photo-detail-sheet-grabber" type="button" aria-label="下滑或轻点关闭更多操作"><span></span></button><header><div><small>ACTIONS</small><h2>更多操作</h2></div></header><div id="photo-detail-action-body" class="photo-detail-sheet-body"></div></section></dialog>
+<dialog id="rename-dialog" class="form-dialog"><form id="rename-form" method="dialog"><header><div><small>TITLE</small><h2>修改任务标题</h2></div><button id="rename-close" class="ghost small" type="button">关闭</button></header><label><span>标题</span><input id="rename-input" maxlength="80" placeholder="留空时使用工作流名称"></label><p id="rename-status" class="status"></p><div class="dialog-actions"><button id="rename-reset" class="ghost" type="button">恢复默认</button><button type="submit">保存</button></div></form></dialog>
+<dialog id="crop-editor-dialog" class="image-editor-dialog"><section class="dialog-panel image-editor-panel"><header><div><small>IMAGE CROP</small><h2>裁切图片</h2></div><button id="crop-editor-close" class="ghost small" type="button" data-icon-before="x">关闭</button></header><div class="image-editor-toolbar"><label><span>裁切比例</span><select id="crop-editor-ratio"><option value="free">自由</option><option value="source">原图比例</option><option value="1:1">1:1</option><option value="4:3">4:3</option><option value="3:4">3:4</option><option value="16:9">16:9</option><option value="9:16">9:16</option></select></label><button id="crop-editor-reset" class="ghost small" type="button" data-icon-before="rotate-ccw">重置</button></div><div class="image-editor-canvas-wrap"><canvas id="crop-editor-canvas"></canvas></div><p class="dialog-message">在图片上拖动框选区域；服务端会从原始图片裁切，不会使用低清预览。</p><div class="dialog-actions"><button id="crop-editor-cancel" class="ghost" type="button">取消</button><button id="crop-editor-apply" type="button" data-icon-before="crop">应用裁切</button></div></section></dialog>
+<dialog id="help-dialog"><section class="dialog-panel page-help-dialog"><header><div><small>HELP</small><h2 id="help-dialog-title">使用说明</h2></div><button id="help-dialog-close" class="ghost small" type="button">关闭</button></header><div id="help-dialog-body" class="help-dialog-body"></div><div class="dialog-actions"><button id="help-dialog-continue" type="button" hidden>继续</button></div></section></dialog>
+<dialog id="lora-guide-dialog"><section class="dialog-panel lora-guide-panel"><header><div><small>LORA GUIDE</small><h2>LoRA 说明</h2></div><div class="segmented lora-guide-view-switch"><button type="button" data-lora-view="full" class="active">完整说明</button><button type="button" data-lora-view="compact">快速选择</button></div><button id="lora-guide-close" class="ghost small" type="button" data-icon-before="x">关闭</button></header><div class="lora-guide-toolbar"><input id="lora-guide-search" type="search" placeholder="搜索 LoRA"><select id="lora-guide-category"><option value="all">全部分类</option></select><div class="segmented"><button type="button" data-lora-filter="all" class="active">全部</button><button type="button" data-lora-filter="favorite">收藏</button><button type="button" data-lora-filter="selected">已选</button></div></div><div id="lora-guide-list" class="lora-guide-list"></div><p id="lora-guide-status" class="status"></p><button id="lora-guide-detail-backdrop" class="lora-guide-detail-backdrop" type="button" tabindex="-1" aria-label="返回 LoRA 列表"></button><aside id="lora-guide-detail" class="lora-guide-detail" aria-hidden="true" aria-labelledby="lora-guide-detail-title"><header><button id="lora-guide-detail-back" class="ghost small" type="button" aria-label="返回 LoRA 列表" data-icon-before="arrow-left">返回</button><small>完整说明</small></header><div class="lora-guide-detail-body"><h3 id="lora-guide-detail-title"></h3><p id="lora-guide-detail-description"></p></div><footer><span>推荐权重</span><strong id="lora-guide-detail-recommended"></strong></footer></aside></section></dialog>
+<p id="action-status" class="action-status" role="status" hidden></p>
+
+  <script src="/static/icons.js?v=4"></script>
+  <script src="/static/mobile-media-guard.js?v=5"></script>
+  <script src="/static/request.js?v=1"></script>
+  <script src="/static/chat.js?v=28"></script>
+  <script src="/static/app.js?v=60"></script>
+  <script src="/static/interface.js?v=21"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose a focused improvement to the public framework
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user problem, not only a proposed implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Dependencies and redistribution impact
+      description: List new nodes, models, licenses, network access, or runtime data involved.

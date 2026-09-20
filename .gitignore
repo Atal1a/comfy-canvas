@@ -1,0 +1,29 @@
+# User configuration and runtime state
+config.toml
+.env
+.env.*
+data/
+*.crt
+*.key
+*.pem
+*.sqlite*
+
+# Installed runtimes, models and external source trees
+.venv/
+runtime/
+models/
+custom_nodes/
+
+# Python and frontend build output
+__pycache__/
+*.py[cod]
+node_modules/
+mobile_server/static_dist/
+playwright-report/
+test-results/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

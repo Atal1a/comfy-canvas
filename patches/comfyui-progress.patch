@@ -1,0 +1,93 @@
+diff --git a/comfy_execution/utils.py b/comfy_execution/utils.py
+index 62d32f10..adaef26c 100644
+--- a/comfy_execution/utils.py
++++ b/comfy_execution/utils.py
+@@ -8,10 +8,12 @@ class ExecutionContext(NamedTuple):
+     Attributes:
+         node_id: The ID of the currently executing node
+         list_index: The index in a list being processed (for operations on batches/lists)
++        list_total: The number of mapped calls for the current node
+     """
+     prompt_id: str
+     node_id: str
+     list_index: Optional[int]
++    list_total: Optional[int] = None
+ 
+ current_executing_context: contextvars.ContextVar[Optional[ExecutionContext]] = contextvars.ContextVar("current_executing_context", default=None)
+ 
+@@ -29,11 +31,12 @@ class CurrentNodeContext:
+             # Code that should run with the current node context set
+             process_image()
+     """
+-    def __init__(self, prompt_id: str, node_id: str, list_index: Optional[int] = None):
++    def __init__(self, prompt_id: str, node_id: str, list_index: Optional[int] = None, list_total: Optional[int] = None):
+         self.context = ExecutionContext(
+             prompt_id= prompt_id,
+             node_id= node_id,
+-            list_index= list_index
++            list_index= list_index,
++            list_total= list_total,
+         )
+         self.token = None
+ 
+diff --git a/execution.py b/execution.py
+index 0b858969..feab6666 100644
+--- a/execution.py
++++ b/execution.py
+@@ -269,7 +269,7 @@ async def _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, f
+                 break
+         if execution_block is None:
+             if pre_execute_cb is not None and index is not None:
+-                pre_execute_cb(index)
++                pre_execute_cb(index, 1 if input_is_list else max_len_input)
+             # V3
+             if isinstance(obj, _ComfyNodeInternal) or (is_class(obj) and issubclass(obj, _ComfyNodeInternal)):
+                 # if is just a class, then assign no state, just create clone
+@@ -291,7 +291,7 @@ async def _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, f
+                 f = getattr(obj, func)
+             if inspect.iscoroutinefunction(f):
+                 async def async_wrapper(f, prompt_id, unique_id, list_index, args):
+-                    with CurrentNodeContext(prompt_id, unique_id, list_index):
++                    with CurrentNodeContext(prompt_id, unique_id, list_index, 1 if input_is_list else max_len_input):
+                         return await f(**args)
+                 task = asyncio.create_task(async_wrapper(f, prompt_id, unique_id, index, args=inputs))
+                 # Give the task a chance to execute without yielding
+@@ -302,7 +302,7 @@ async def _async_map_node_over_list(prompt_id, unique_id, obj, input_data_all, f
+                 else:
+                     results.append(task)
+             else:
+-                with CurrentNodeContext(prompt_id, unique_id, index):
++                with CurrentNodeContext(prompt_id, unique_id, index, 1 if input_is_list else max_len_input):
+                     result = f(**inputs)
+                 results.append(result)
+         else:
+@@ -537,9 +537,14 @@ async def execute(server, dynprompt, caches, current_item, extra_data, executed,
+                     return ExecutionBlocker(None)
+                 else:
+                     return block
+-            def pre_execute_cb(call_index):
++            def pre_execute_cb(call_index, call_total):
+                 # TODO - How to handle this with async functions without contextvars (which requires Python 3.12)?
+                 GraphBuilder.set_default_prefix(unique_id, call_index, 0)
++                if server.client_id is not None:
++                    message = {"node": unique_id, "display_node": display_node_id, "prompt_id": prompt_id}
++                    if call_total > 1:
++                        message.update({"list_index": call_index, "list_total": call_total})
++                    server.send_sync("executing", message, server.client_id)
+ 
+             try:
+                 output_data, output_ui, has_subgraph, has_pending_tasks = await get_output_data(prompt_id, unique_id, obj, input_data_all, execution_block_cb=execution_block_cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)
+diff --git a/main.py b/main.py
+index 361b1fc8..f55c3def 100644
+--- a/main.py
++++ b/main.py
+@@ -445,6 +445,9 @@ def hijack_progress(server_instance):
+         if node_id is None:
+             node_id = server_instance.last_node_id
+         progress = {"value": value, "max": total, "prompt_id": prompt_id, "node": node_id}
++        if executing_context is not None and executing_context.list_index is not None and executing_context.list_total is not None and executing_context.list_total > 1:
++            progress["list_index"] = executing_context.list_index
++            progress["list_total"] = executing_context.list_total
+         get_progress_state().update_progress(node_id, value, total, preview_image)
+ 
+         server_instance.send_sync("progress", progress, server_instance.client_id)

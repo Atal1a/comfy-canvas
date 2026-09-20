@@ -1,0 +1,113 @@
+{
+  "schema_version": 2,
+  "comfyui": {
+    "repository": "https://github.com/comfyanonymous/ComfyUI.git",
+    "commit": "c2bcbecd82ec5ae66594340b395c24ef0217b238",
+    "license_spdx": "GPL-3.0-only",
+    "patches": ["patches/comfyui-progress.patch"]
+  },
+  "verified_public_custom_nodes": [
+    {
+      "name": "RES4LYF",
+      "repository": "https://github.com/ClownsharkBatwing/RES4LYF.git",
+      "commit": "419de2d7c78f415dde9aa352a7231820ebfc17a4",
+      "license_spdx": "LicenseRef-RES4LYF",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "comfyui_memory_cleanup",
+      "repository": "https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup.git",
+      "commit": "58de13a6090e04408e343501ff8902c034d9f518",
+      "license_spdx": "NOASSERTION",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "comfyui-krea2edit",
+      "repository": "https://github.com/lbouaraba/comfyui-krea2edit.git",
+      "commit": "86f886dac23013d88996e3a2e99093ba44d322fb",
+      "license_spdx": "Apache-2.0",
+      "install_profile": "main",
+      "required_by": ["krea-identity-edit"]
+    },
+    {
+      "name": "ComfyUI-KJNodes",
+      "repository": "https://github.com/kijai/ComfyUI-KJNodes.git",
+      "commit": "6ab7e8130e449ed2c0037589bcf84146ceb7fc9c",
+      "license_spdx": "GPL-3.0-only",
+      "install_profile": "main",
+      "required_by": ["minimax-h3"]
+    },
+    {
+      "name": "ComfyUI-MiniMax-H3-Turbo",
+      "repository": "https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo.git",
+      "commit": "4274783a23afcfdbea3b4876cb79effd6c510785",
+      "license_spdx": "Apache-2.0",
+      "install_profile": "main",
+      "required_by": ["minimax-h3"]
+    },
+    {
+      "name": "ComfyUI-Custom-Scripts",
+      "repository": "https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git",
+      "commit": "609f3afaa74b2f88ef9ce8d939626065e3247469",
+      "license_spdx": "MIT",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "ComfyUI-EditUtils",
+      "repository": "https://github.com/lrzjason/ComfyUI-EditUtils.git",
+      "commit": "aedff84e01cd96592474b83fc7be26255c0fb618",
+      "license_spdx": "GPL-3.0-only",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "ComfyUI-Easy-Use",
+      "repository": "https://github.com/yolain/ComfyUI-Easy-Use.git",
+      "commit": "005c57839c5bee88f1a0a41970ca965ab470a4c8",
+      "license_spdx": "GPL-3.0-only",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "ComfyUI-SeedVR2_VideoUpscaler",
+      "repository": "https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git",
+      "commit": "4490bd1f482e026674543386bb2a4d176da245b9",
+      "license_spdx": "Apache-2.0",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "ComfyUI_LayerStyle",
+      "repository": "https://github.com/chflame163/ComfyUI_LayerStyle.git",
+      "commit": "d94bef1ee5ed3656f5ff1bb2830a4ffd94f40935",
+      "license_spdx": "MIT",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    },
+    {
+      "name": "Comfyui_TTP_Toolset",
+      "repository": "https://github.com/TTPlanetPig/Comfyui_TTP_Toolset.git",
+      "commit": "c8889e40e90e293226cc6810c7d27b9c17300da6",
+      "license_spdx": "MIT",
+      "install_profile": "optional",
+      "required_by": ["enhanced-upscale"]
+    }
+  ],
+  "excluded_local_components": [
+    {
+      "name": "binyuan_sampler_plugin_v5.0",
+      "reason": "not referenced by retained workflows or application runtime"
+    },
+    {
+      "name": "ComfyUI-Manager",
+      "reason": "installation manager is not required at runtime"
+    },
+    {
+      "name": "ComfyUI_Comfyroll_CustomNodes",
+      "reason": "workflow metadata reference does not correspond to a required custom node type"
+    }
+  ]
+}
