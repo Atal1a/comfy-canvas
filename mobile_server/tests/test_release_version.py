@@ -15,7 +15,7 @@ class ReleaseVersionTests(unittest.TestCase):
         self.assertEqual(lock["packages"][""]["version"], __version__)
         self.assertEqual(app.version, __version__)
         self.assertEqual(app.openapi()["info"]["version"], __version__)
-        self.assertIn(f"## [{__version__}]", (root / "CHANGELOG.md").read_text(encoding="utf-8"))
+        self.assertIn(f"## [{__version__}]", (root / "docs/CHANGELOG.md").read_text(encoding="utf-8"))
         self.assertTrue((root / "docs" / "releases" / f"{__version__}.md").is_file())
         self.assertEqual(package["license"], "GPL-3.0-only")
         self.assertEqual(lock["packages"][""]["license"], package["license"])

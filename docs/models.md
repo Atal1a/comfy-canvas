@@ -20,11 +20,11 @@ text_encoder = 'qwen_3_8b.safetensors'
 
 这些字段填写对应模型目录下的相对文件名，包含子目录。在已有 TOML 表中更新相应字段。模型、编码器和 VAE 需要相互兼容。
 
-`models.lock.json` 记录参考模型的来源和校验值。自定义文件使用配置中的名称，不要求与参考模型的哈希一致。
+`manifests/models.lock.json` 记录参考模型的来源和校验值。自定义文件使用配置中的名称，不要求与参考模型的哈希一致。
 
 ## 默认参考文件
 
-四条主工作流的 12 个唯一文件已经记录在 `models.lock.json`，包括 Hugging Face 仓库、固定 revision、仓库内路径、许可证标识、字节数和 SHA-256。Krea Turbo 文生图与 Identity Edit 共用基础模型、编码器和 VAE，文生图不需要 Identity Edit LoRA。来源 URL 指向上游模型仓库。
+四条主工作流的 12 个唯一文件已经记录在 `manifests/models.lock.json`，包括 Hugging Face 仓库、固定 revision、仓库内路径、许可证标识、字节数和 SHA-256。Krea Turbo 文生图与 Identity Edit 共用基础模型、编码器和 VAE，文生图不需要 Identity Edit LoRA。来源 URL 指向上游模型仓库。
 
 文生图文件名在 `[models.krea_turbo]` 中设置；未填写时沿用 `[models.krea_identity]` 的对应配置。
 

@@ -44,7 +44,7 @@ def _required_text(document: dict[str, Any], key: str, context: str) -> str:
 
 
 def load_dependency_manifest(project_root: Path) -> tuple[CustomNodeDependency, ...]:
-    path = project_root / "dependencies.lock.json"
+    path = project_root / "manifests/dependencies.lock.json"
     try:
         document = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:

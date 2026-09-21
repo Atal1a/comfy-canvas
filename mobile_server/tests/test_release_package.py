@@ -8,6 +8,22 @@ from tools.package_release import public_showcase_files, source_files
 
 
 class ReleasePackageTests(unittest.TestCase):
+    def test_relocated_english_readme_resolves_showcase_links(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "docs/showcase").mkdir(parents=True)
+            (root / "README.md").write_text("[English](docs/README.en.md)")
+            (root / "docs/README.en.md").write_text("[Home](../README.md) [Film](showcase/current.mp4)")
+            (root / "docs/showcase/current.mp4").touch()
+            self.assertEqual(public_showcase_files(root), {Path("docs/showcase/current.mp4")})
+
+    def test_relocated_windows_helpers_resolve_project_root(self):
+        root = Path(__file__).resolve().parents[2]
+        for name in ("启动ComfyUI维护模式.bat", "配置局域网防火墙.bat"):
+            script = (root / "scripts" / name).read_text(encoding="utf-8")
+            self.assertIn('set "BASE=%~dp0..\\"', script)
+            self.assertIn('cd /d "%BASE%"', script)
+
     def test_showcase_only_includes_referenced_media(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

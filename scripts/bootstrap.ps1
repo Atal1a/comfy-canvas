@@ -13,7 +13,7 @@ function Invoke-Checked([scriptblock]$Command) {
     if ($LASTEXITCODE -ne 0) { throw "Command failed (exit $LASTEXITCODE): $Command" }
 }
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$lockPath = Join-Path $projectRoot 'dependencies.lock.json'
+$lockPath = Join-Path $projectRoot 'manifests/dependencies.lock.json'
 $lock = Get-Content -LiteralPath $lockPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $comfyRoot = Join-Path $projectRoot 'runtime\ComfyUI'
 $venvPython = Join-Path $projectRoot '.venv\Scripts\python.exe'

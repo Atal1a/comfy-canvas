@@ -1,6 +1,6 @@
 # Comfy Canvas
 
-[English](README.en.md) · [1.0.1 版本说明](docs/releases/1.0.1.md)
+[English](docs/README.en.md) · [1.0.1 版本说明](docs/releases/1.0.1.md)
 
 在电脑和手机浏览器中生成图片、编辑图片、制作视频，再用瀑布流浏览和管理作品。Comfy Canvas 基于 ComfyUI，在 Windows 电脑上运行，既可以自己用，也可以让同一局域网里的其他人一起用。
 
@@ -65,8 +65,8 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 由 Atal1a 设计与开发。后端使用 FastAPI 和 SQLite，通过 HTTP / WebSocket 连接 ComfyUI。
 
-[开发与测试](CONTRIBUTING.md) · [第三方组件](THIRD_PARTY_NOTICES.md) · [工作流来源](docs/workflow-provenance.md) · [素材说明](docs/showcase/NOTES.md) · [安全说明](SECURITY.md)
+[开发与测试](.github/CONTRIBUTING.md) · [第三方组件](docs/THIRD_PARTY_NOTICES.md) · [工作流来源](docs/workflow-provenance.md) · [素材说明](docs/showcase/NOTES.md) · [安全说明](.github/SECURITY.md)
 
 ## 许可证
 
-Copyright © 2026 Atal1a。项目自有代码采用 [GNU GPL v3.0](LICENSE)（`GPL-3.0-only`）。第三方代码、模型和工作流遵循各自许可证，见[第三方说明](THIRD_PARTY_NOTICES.md)。
+Copyright © 2026 Atal1a。项目自有代码采用 [GNU GPL v3.0](LICENSE)（`GPL-3.0-only`）。第三方代码、模型和工作流遵循各自许可证，见[第三方说明](docs/THIRD_PARTY_NOTICES.md)。

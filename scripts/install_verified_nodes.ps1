@@ -10,7 +10,7 @@ function Invoke-Checked([scriptblock]$Command) {
     if ($LASTEXITCODE -ne 0) { throw "Command failed (exit $LASTEXITCODE): $Command" }
 }
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$lock = Get-Content -LiteralPath (Join-Path $projectRoot 'dependencies.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$lock = Get-Content -LiteralPath (Join-Path $projectRoot 'manifests/dependencies.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $nodeRoot = Join-Path $projectRoot 'runtime\ComfyUI\custom_nodes'
 $venvPython = Join-Path $projectRoot '.venv\Scripts\python.exe'
 if (-not (Test-Path -LiteralPath $nodeRoot)) {

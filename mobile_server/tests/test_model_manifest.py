@@ -20,11 +20,12 @@ class ModelManifestTests(unittest.TestCase):
         self.assertTrue(all(model.source_url.startswith("https://huggingface.co/") for model in models))
 
     def test_manifest_rejects_default_filename_drift(self) -> None:
-        document = json.loads((PROJECT_ROOT / "models.lock.json").read_text(encoding="utf-8"))
+        document = json.loads((PROJECT_ROOT / "manifests/models.lock.json").read_text(encoding="utf-8"))
         document["models"][0]["filename"] = "renamed.safetensors"
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            (root / "models.lock.json").write_text(json.dumps(document), encoding="utf-8")
+            (root / "manifests").mkdir()
+            (root / "manifests/models.lock.json").write_text(json.dumps(document), encoding="utf-8")
             (root / "config.example.toml").write_text(
                 (PROJECT_ROOT / "config.example.toml").read_text(encoding="utf-8"),
                 encoding="utf-8",
@@ -33,11 +34,12 @@ class ModelManifestTests(unittest.TestCase):
                 load_model_manifest(root)
 
     def test_manifest_rejects_invalid_hash(self) -> None:
-        document = json.loads((PROJECT_ROOT / "models.lock.json").read_text(encoding="utf-8"))
+        document = json.loads((PROJECT_ROOT / "manifests/models.lock.json").read_text(encoding="utf-8"))
         document["models"][0]["sha256"] = "unknown"
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            (root / "models.lock.json").write_text(json.dumps(document), encoding="utf-8")
+            (root / "manifests").mkdir()
+            (root / "manifests/models.lock.json").write_text(json.dumps(document), encoding="utf-8")
             (root / "config.example.toml").write_text(
                 (PROJECT_ROOT / "config.example.toml").read_text(encoding="utf-8"),
                 encoding="utf-8",

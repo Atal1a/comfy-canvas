@@ -17,7 +17,7 @@ EXCLUDED_SUFFIXES = {".key", ".pem", ".crt", ".sqlite", ".sqlite3", ".db", ".saf
 
 def public_showcase_files(root: Path) -> set[Path]:
     """Follow public documentation links, leaving unused review media on disk."""
-    pending = [root / name for name in ("README.md", "README.en.md") if (root / name).is_file()]
+    pending = [root / name for name in ("README.md", "docs/README.en.md") if (root / name).is_file()]
     visited: set[Path] = set()
     while pending:
         path = pending.pop().resolve()

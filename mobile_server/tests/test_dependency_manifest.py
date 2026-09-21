@@ -33,13 +33,14 @@ class DependencyManifestTests(unittest.TestCase):
         self.assertTrue(all(item.license_spdx for item in dependencies))
 
     def test_manifest_rejects_moving_commit_reference(self) -> None:
-        source = json.loads((PROJECT_ROOT / "dependencies.lock.json").read_text(encoding="utf-8"))
+        source = json.loads((PROJECT_ROOT / "manifests/dependencies.lock.json").read_text(encoding="utf-8"))
         source["verified_public_custom_nodes"][0]["commit"] = "main"
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
+            (root / "manifests").mkdir()
             (root / "patches").mkdir()
             (root / "patches" / "comfyui-progress.patch").write_text("patch", encoding="utf-8")
-            (root / "dependencies.lock.json").write_text(json.dumps(source), encoding="utf-8")
+            (root / "manifests/dependencies.lock.json").write_text(json.dumps(source), encoding="utf-8")
             with self.assertRaisesRegex(DependencyManifestError, "40-character"):
                 load_dependency_manifest(root)
 

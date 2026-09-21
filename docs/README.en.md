@@ -1,18 +1,18 @@
 # Comfy Canvas
 
-[中文](README.md) · [Version 1.0.1](docs/releases/1.0.1.md)
+[中文](../README.md) · [Version 1.0.1](releases/1.0.1.md)
 
 Generate images, edit photos and create videos from a desktop or phone browser, then browse and organize your work in a masonry gallery. Built on ComfyUI, Comfy Canvas runs on a Windows PC for personal use or shared access over your LAN.
 
-[![Watch Comfy Canvas](docs/showcase/film-v10-preview.gif)](docs/showcase/comfy-canvas-film-v10.mp4)
+[![Watch Comfy Canvas](showcase/film-v10-preview.gif)](showcase/comfy-canvas-film-v10.mp4)
 
-[Watch the film · 2:28](docs/showcase/comfy-canvas-film-v10.mp4) · [Desktop](docs/showcase/desktop/README.md) · [Mobile](docs/showcase/mobile/README.md)
+[Watch the film · 2:28](showcase/comfy-canvas-film-v10.mp4) · [Desktop](showcase/desktop/README.md) · [Mobile](showcase/mobile/README.md)
 
 ## Room for your work
 
 A dark background, rounded cards and large previews keep the images in focus. Portrait and landscape images fit together in a masonry gallery. Open a work to inspect details, compare it with the source, or bring its settings into your next edit.
 
-![Desktop gallery](docs/showcase/desktop/gallery.png)
+![Desktop gallery](showcase/desktop/gallery.png)
 
 On desktop, reference images, instructions and settings are arranged in steps. On a phone, full-screen viewing, bottom controls and floating navigation keep actions within reach. Pinch the gallery to switch between one, two and three columns.
 
@@ -25,7 +25,7 @@ On desktop, reference images, instructions and settings are arranged in steps. O
 - Zoom, pan, compare results and reuse settings for another edit.
 - Filter, sort, collect and share works; recover deleted items within the recycle-bin retention period.
 
-Workflows include Krea2 Turbo text-to-image, Krea2 Identity Edit, Qwen Image Edit 2511 and MiniMax H3. [Full feature list](docs/features.md)
+Workflows include Krea2 Turbo text-to-image, Krea2 Identity Edit, Qwen Image Edit 2511 and MiniMax H3. [Full feature list](features.md)
 
 ## Two ways to use it
 
@@ -59,14 +59,14 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 Set the ComfyUI directory, service URL, output directory and model filenames in `config.toml`. Start ComfyUI, then run `启动ComfyCanvas.bat`. The first launch prompts you to create an administrator account.
 
-[Setup guide (Chinese)](docs/setup.md) · [Models](docs/models.md) · [Custom nodes](docs/dependencies.md)
+[Setup guide (Chinese)](setup.md) · [Models](models.md) · [Custom nodes](dependencies.md)
 
 ## Project
 
 Designed and developed by Atal1a. Built with FastAPI and SQLite, communicating with ComfyUI through HTTP / WebSocket.
 
-[Contributing](CONTRIBUTING.md) · [Third-party components](THIRD_PARTY_NOTICES.md) · [Workflow sources](docs/workflow-provenance.md) · [Demo assets](docs/showcase/NOTES.md) · [Security](SECURITY.md)
+[Contributing](../.github/CONTRIBUTING.md) · [Third-party components](THIRD_PARTY_NOTICES.md) · [Workflow sources](workflow-provenance.md) · [Demo assets](showcase/NOTES.md) · [Security](../.github/SECURITY.md)
 
 ## License
 
-Copyright © 2026 Atal1a. Project-authored code is licensed under [GNU GPL v3.0](LICENSE) (`GPL-3.0-only`). Third-party code, models and workflows retain their own licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).
+Copyright © 2026 Atal1a. Project-authored code is licensed under [GNU GPL v3.0](../LICENSE) (`GPL-3.0-only`). Third-party code, models and workflows retain their own licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).

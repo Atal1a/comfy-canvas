@@ -1,10 +1,10 @@
 # Third-party source dependencies
 
-Comfy Canvas project-authored code is licensed under GPL-3.0-only, copyright 2026 Atal1a; see [LICENSE](LICENSE). This grant does not relicense third-party materials or grant rights to model weights or externally sourced workflow graphs.
+Comfy Canvas project-authored code is licensed under GPL-3.0-only, copyright 2026 Atal1a; see [LICENSE](../LICENSE). This grant does not relicense third-party materials or grant rights to model weights or externally sourced workflow graphs.
 
 `patches/comfyui-progress.patch` modifies GPL-3.0-only ComfyUI source and is distributed under GPL-3.0-only. Upstream copyright notices remain applicable. Other external projects listed below retain their own licenses.
 
-This repository does not vendor the following projects. Bootstrap scripts clone the exact commits recorded in `dependencies.lock.json`. The links and SPDX identifiers below are provided for review; each upstream license remains authoritative.
+This repository does not vendor the following projects. Bootstrap scripts clone the exact commits recorded in `manifests/dependencies.lock.json`. The links and SPDX identifiers below are provided for review; each upstream license remains authoritative.
 
 | Component | Pinned source | License |
 |---|---|---|
@@ -23,4 +23,4 @@ This repository does not vendor the following projects. Bootstrap scripts clone 
 
 Model weights are deliberately excluded. Their licenses and redistribution terms must be reviewed separately before publishing download links or packaged artifacts.
 
-The Flux enhanced-upscale workflow was collected from a third party; its original source is still being traced. Other workflow graphs were assembled by Atal1a. See [workflow provenance](docs/workflow-provenance.md); graph authorship does not change the licenses of the nodes and models used by those graphs.
+The Flux enhanced-upscale workflow was collected from a third party; its original source is still being traced. Other workflow graphs were assembled by Atal1a. See [workflow provenance](workflow-provenance.md); graph authorship does not change the licenses of the nodes and models used by those graphs.

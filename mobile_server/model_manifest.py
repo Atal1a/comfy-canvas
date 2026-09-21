@@ -76,7 +76,7 @@ def _config_value(document: dict[str, Any], dotted: str) -> str:
 
 
 def load_model_manifest(project_root: Path) -> tuple[ModelArtifact, ...]:
-    path = project_root / "models.lock.json"
+    path = project_root / "manifests/models.lock.json"
     try:
         document = json.loads(path.read_text(encoding="utf-8"))
         with (project_root / "config.example.toml").open("rb") as source:
