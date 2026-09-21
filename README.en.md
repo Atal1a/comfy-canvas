@@ -1,12 +1,12 @@
 # Comfy Canvas
 
-[中文](README.md) · [Version 1.0.0](docs/releases/1.0.0.md)
+[中文](README.md) · [Version 1.0.1](docs/releases/1.0.1.md)
 
-A visual workspace for ComfyUI, designed for browsing as much as creating. Run it on a Windows PC for yourself, or let others on your LAN use it from their browsers.
+Generate images, edit photos and create videos from a desktop or phone browser, then browse and organize your work in a masonry gallery. Built on ComfyUI, Comfy Canvas runs on a Windows PC for personal use or shared access over your LAN.
 
-[![Watch Comfy Canvas](docs/showcase/film-v9-preview.gif)](docs/showcase/comfy-canvas-film-v9.mp4)
+[![Watch Comfy Canvas](docs/showcase/film-v10-preview.gif)](docs/showcase/comfy-canvas-film-v10.mp4)
 
-[Watch the film · 2:04](docs/showcase/comfy-canvas-film-v9.mp4) · [Desktop](docs/showcase/desktop/README.md) · [Mobile](docs/showcase/mobile/README.md)
+[Watch the film · 2:28](docs/showcase/comfy-canvas-film-v10.mp4) · [Desktop](docs/showcase/desktop/README.md) · [Mobile](docs/showcase/mobile/README.md)
 
 ## Room for your work
 
@@ -18,12 +18,14 @@ On desktop, reference images, instructions and settings are arranged in steps. O
 
 ## Create, inspect, organize
 
-- Edit images and generate videos; crop references and choose LoRAs from their notes.
+- **Image generation**: turn a text prompt into an image with Krea Turbo, without a reference image. Set dimensions, batch size and seeds, and adjust up to ten optional LoRAs.
+- **Image editing**: modify existing images, crop references, compare before and after, then continue editing or upscale the result.
+- **Video generation**: turn a text prompt or first-frame image into a video, set its duration and aspect ratio, and play the result.
 - Follow the shared queue, check progress and cancel tasks.
 - Zoom, pan, compare results and reuse settings for another edit.
 - Filter, sort, collect and share works; recover deleted items within the recycle-bin retention period.
 
-Workflows include Krea2 Identity Edit, Qwen Image Edit 2511 and MiniMax H3. [Full feature list](docs/features.md)
+Workflows include Krea2 Turbo text-to-image, Krea2 Identity Edit, Qwen Image Edit 2511 and MiniMax H3. [Full feature list](docs/features.md)
 
 ## Two ways to use it
 

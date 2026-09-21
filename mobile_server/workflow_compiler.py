@@ -31,6 +31,12 @@ class WorkflowSpec:
 
 WORKFLOWS = (
     WorkflowSpec(
+        "krea-turbo", "Krea2 Turbo 文生图",
+        "Krea2_Turbo.json", "krea-turbo.mobile.json", "4", "text",
+        max_lora_slots=10,
+        description="使用官方 Krea2 Turbo 从提示词生成图片，无需参考图；支持最多十个可选 LoRA。",
+    ),
+    WorkflowSpec(
         "qwen2511-modular-flux2",
         "Qwen 2511 Modular FP8 Edit",
         "Qwen2511_Modular_Edit_FP8.json",
@@ -78,9 +84,10 @@ WORKFLOWS = (
 )
 
 ENABLED_WORKFLOW_KEYS = frozenset(
-    {"qwen2511-modular-flux2", "krea-identity-edit", "minimax-h3"}
+    {"krea-turbo", "qwen2511-modular-flux2", "krea-identity-edit", "minimax-h3"}
 )
 WORKFLOW_DISPLAY_PRIORITY = {
+    "krea-turbo": 5,
     "krea-identity-edit": 10,
     "minimax-h3": 20,
     "qwen2511-modular-flux2": 30,

@@ -1,12 +1,12 @@
 # Comfy Canvas
 
-[English](README.en.md) · [1.0.0 版本说明](docs/releases/1.0.0.md)
+[English](README.en.md) · [1.0.1 版本说明](docs/releases/1.0.1.md)
 
-把 ComfyUI 工作流放进一个好看、顺手的创作界面。Comfy Canvas 在 Windows 电脑上运行，既可以自己用，也可以让同一局域网里的其他人通过浏览器一起用。
+在电脑和手机浏览器中生成图片、编辑图片、制作视频，再用瀑布流浏览和管理作品。Comfy Canvas 基于 ComfyUI，在 Windows 电脑上运行，既可以自己用，也可以让同一局域网里的其他人一起用。
 
-[![观看 Comfy Canvas 功能演示](docs/showcase/film-v9-preview.gif)](docs/showcase/comfy-canvas-film-v9.mp4)
+[![观看 Comfy Canvas 功能演示](docs/showcase/film-v10-preview.gif)](docs/showcase/comfy-canvas-film-v10.mp4)
 
-[播放完整视频 · 2:04](docs/showcase/comfy-canvas-film-v9.mp4) · [桌面端](docs/showcase/desktop/README.md) · [手机端](docs/showcase/mobile/README.md)
+[播放完整视频 · 2:28](docs/showcase/comfy-canvas-film-v10.mp4) · [桌面端](docs/showcase/desktop/README.md) · [手机端](docs/showcase/mobile/README.md)
 
 ## 让作品成为界面的主角
 
@@ -18,12 +18,14 @@
 
 ## 从创作到整理
 
-- **图片与视频**：上传、裁切参考图，填写编辑要求；从 LoRA 说明中选择模型并调整权重。
+- **图片生成**：使用 Krea Turbo 输入提示词直接文生图，无需参考图片；调整画幅、生成数量、Seed 和最多十个 LoRA 的权重。
+- **图片编辑**：修改已有图片，上传或裁切参考图，对比生成前后的效果，再继续编辑或高清放大。
+- **视频生成**：通过文字描述或首帧图片生成视频，设置时长与画幅，查看和播放结果。
 - **任务进度**：查看排队与生成状态，取消任务，完成后直接查看结果。
 - **继续创作**：放大、拖动、对比原图，复用参数或接着编辑。
 - **作品管理**：筛选、排序、收藏和分享；误删的作品可在回收站保留期内恢复。
 
-支持 Krea2 Identity Edit、Qwen Image Edit 2511 和 MiniMax H3。[查看工作流与完整功能](docs/features.md)
+支持 Krea2 Turbo 文生图、Krea2 Identity Edit、Qwen Image Edit 2511 和 MiniMax H3。[查看工作流与完整功能](docs/features.md)
 
 ## 选择使用方式
 

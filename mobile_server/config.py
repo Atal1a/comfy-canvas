@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG_PATH = PROJECT_ROOT / "config.toml"
 DEFAULT_WORKFLOWS = (
+    "krea-turbo",
     "qwen2511-modular-flux2",
     "krea-identity-edit",
     "minimax-h3",
@@ -50,6 +51,9 @@ class AppSettings:
     user_generation_limit: int
     admin_generation_limit: int
     krea_identity_model: str
+    krea_turbo_model: str
+    krea_turbo_text_encoder: str
+    krea_turbo_vae: str
     krea_identity_text_encoder: str
     krea_identity_vae: str
     krea_identity_lora: str
@@ -171,6 +175,7 @@ def load_settings(config_path: Path | None = None) -> AppSettings:
     models = _table(document, "models")
     prompt_assistant = _table(document, "prompt_assistant")
     krea_identity = _table(models, "krea_identity")
+    krea_turbo = _table(models, "krea_turbo")
     minimax_h3 = _table(models, "minimax_h3")
     qwen2511 = _table(models, "qwen2511")
     enhanced_upscale = _table(models, "enhanced_upscale")
@@ -178,7 +183,8 @@ def load_settings(config_path: Path | None = None) -> AppSettings:
     _known_keys(comfyui, "comfyui", {"url", "auto_start", "launch_args"})
     _known_keys(server, "server", {"host", "port"})
     _known_keys(features, "features", {"workflows"})
-    _known_keys(models, "models", {"krea_identity", "minimax_h3", "qwen2511", "enhanced_upscale"})
+    _known_keys(models, "models", {"krea_turbo", "krea_identity", "minimax_h3", "qwen2511", "enhanced_upscale"})
+    _known_keys(krea_turbo, "models.krea_turbo", {"base_model", "text_encoder", "vae"})
     _known_keys(
         krea_identity,
         "models.krea_identity",
@@ -245,6 +251,9 @@ def load_settings(config_path: Path | None = None) -> AppSettings:
         user_generation_limit=_integer(limits.get("images_per_user_task"), 4, "limits.images_per_user_task", 1, 100),
         admin_generation_limit=_integer(limits.get("images_per_admin_task"), 8, "limits.images_per_admin_task", 1, 100),
         krea_identity_model=_text(krea_identity.get("base_model"), "krea2_turbo_fp8_scaled.safetensors", "models.krea_identity.base_model"),
+        krea_turbo_model=_text(krea_turbo.get("base_model", krea_identity.get("base_model")), "krea2_turbo_fp8_scaled.safetensors", "models.krea_turbo.base_model"),
+        krea_turbo_text_encoder=_text(krea_turbo.get("text_encoder", krea_identity.get("text_encoder")), "qwen3vl_4b_fp8_scaled.safetensors", "models.krea_turbo.text_encoder"),
+        krea_turbo_vae=_text(krea_turbo.get("vae", krea_identity.get("vae")), "qwen_image_vae.safetensors", "models.krea_turbo.vae"),
         krea_identity_text_encoder=_text(krea_identity.get("text_encoder"), "qwen3vl_4b_fp8_scaled.safetensors", "models.krea_identity.text_encoder"),
         krea_identity_vae=_text(krea_identity.get("vae"), "qwen_image_vae.safetensors", "models.krea_identity.vae"),
         krea_identity_lora=_text(krea_identity.get("identity_lora"), "krea2_identity_edit_v1_2.safetensors", "models.krea_identity.identity_lora"),

@@ -16,7 +16,7 @@ class ModelManifestTests(unittest.TestCase):
         models = load_model_manifest(PROJECT_ROOT)
 
         self.assertEqual(len(models), 12)
-        self.assertEqual(len({key for model in models for key in model.config_keys}), 13)
+        self.assertEqual(len({key for model in models for key in model.config_keys}), 16)
         self.assertTrue(all(model.source_url.startswith("https://huggingface.co/") for model in models))
 
     def test_manifest_rejects_default_filename_drift(self) -> None:

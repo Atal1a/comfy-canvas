@@ -14,6 +14,9 @@ HEX64 = re.compile(r"^[0-9a-f]{64}$")
 REPOSITORY = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
 EXPECTED_CONFIG_KEYS = frozenset(
     {
+        "models.krea_turbo.base_model",
+        "models.krea_turbo.text_encoder",
+        "models.krea_turbo.vae",
         "models.krea_identity.base_model",
         "models.krea_identity.text_encoder",
         "models.krea_identity.vae",

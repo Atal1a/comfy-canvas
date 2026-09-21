@@ -519,7 +519,7 @@ class CanonicalUiTests(unittest.TestCase):
         self.assertIn("grid-template-columns: minmax(0,2fr) minmax(300px,1fr)", css)
         self.assertIn(".home-gallery-paging { display: none; }", css)
         self.assertIn("grid-template-columns: repeat(2,minmax(0,1fr))", css)
-        self.assertIn("order=['krea-identity-edit','minimax-h3','qwen2511-modular-flux2']", script)
+        self.assertIn("order=['krea-turbo','krea-identity-edit','minimax-h3','qwen2511-modular-flux2']", script)
         self.assertLess(script.index("order.forEach"), script.index("root.append(homeWorkflowCard('Flux 高清放大'"))
         workflow_card = script.split("function homeWorkflowCard", 1)[1].split("function renderWorkflowCards", 1)[0]
         self.assertNotIn("description", workflow_card)

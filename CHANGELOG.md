@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1]
+
+- Restore Krea Turbo text-to-image generation without a reference image.
+- Support up to ten optional LoRAs, configurable model files and dependency checks for text-to-image.
+- Add regression coverage for the default workflow, LoRA chains, dimensions and empty negative prompts.
+- Separate image generation, image editing and video generation in the feature overview.
+- Update the desktop/mobile screenshots and film with real text-to-image generation and LoRA selection.
+
 ## [1.0.0]
 
 ### Initial version

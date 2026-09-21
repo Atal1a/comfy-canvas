@@ -3932,19 +3932,47 @@ def build_graph(
                     bypass.add(node_id)
     else:
         overrides["11"] = {"seed": settings["seed"], "steps": settings["steps"], "cfg": settings["cfg"], "denoise": settings["denoise"], "sampler_name": settings["sampler"], "scheduler": settings["scheduler"]}
-        overrides["6"] = {"aspect_ratio": settings["aspect_ratio"], "megapixels": settings["megapixels"], "multiple": settings["multiple"]}
-        overrides["7"] = {"batch_size": settings["batch"]}
-        for index, node_id in enumerate(("8", "9", "10")):
-            if index < len(settings["loras"]):
-                item = settings["loras"][index]
-                overrides[node_id] = {"lora_name": item["name"], "strength_model": item["weight"]}
-            else:
-                bypass.add(node_id)
+        required = {
+            "diffusion_models": SETTINGS.krea_turbo_model,
+            "text_encoders": SETTINGS.krea_turbo_text_encoder,
+            "vae": SETTINGS.krea_turbo_vae,
+        }
+        for folder, filename in required.items():
+            if not model_path(COMFY_ROOT, folder, filename).is_file():
+                raise HTTPException(409, f"Krea Turbo dependency is unavailable: {filename}")
+        overrides["1"] = {"unet_name": SETTINGS.krea_turbo_model, "weight_dtype": "default"}
+        overrides["2"] = {"clip_name": SETTINGS.krea_turbo_text_encoder, "type": "krea2", "device": "default"}
+        overrides["3"] = {"vae_name": SETTINGS.krea_turbo_vae}
+        ratio_width, ratio_height = map(int, settings["aspect_ratio"].split()[0].split(":"))
+        ratio = ratio_width / ratio_height
+        multiple = settings["multiple"]
+        height = (settings["megapixels"] * 1_000_000 / ratio) ** 0.5
+        width = height * ratio
+        overrides["7"] = {
+            "width": max(multiple, round(width / multiple) * multiple),
+            "height": max(multiple, round(height / multiple) * multiple),
+            "batch_size": settings["batch"],
+        }
+        # The portable template keeps its optional slots bypassed. Build the
+        # complete selected chain below so every slot follows the same path.
+        bypass.update(("8", "9", "10"))
     source = MOBILE_WORKFLOW_DIR / spec.mobile_source_name
     api_graph = compile_workflow(
         source, overrides, bypass,
         output_node_types=("SaveVideo",) if spec.variant == "minimax_h3" else ("SaveImage",),
     )
+    if spec.key == "krea-turbo":
+        append_extra_model_loras(
+            api_graph, settings["loras"], static_slots=0,
+            consumer_node="11", consumer_input="model",
+            node_prefix="krea_turbo_extra_lora", relative_names=True,
+        )
+        if settings["negative_prompt"]:
+            api_graph["turbo_negative"] = {
+                "class_type": "CLIPTextEncode",
+                "inputs": {"clip": ["2", 0], "text": settings["negative_prompt"]},
+            }
+            api_graph["11"]["inputs"]["negative"] = ["turbo_negative", 0]
     if spec.variant == "krea_identity":
         append_extra_model_loras(
             api_graph, settings["stage1_loras"], static_slots=6,

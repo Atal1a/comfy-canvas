@@ -2,13 +2,25 @@
 
 [返回展示首页](../../../README.md) · [查看手机端](../mobile/README.md)
 
-部分图片用于界面演示；庭院日夜对比与海岸视频为实际工作流结果。
+部分图片用于界面演示；陶器文生图、庭院日夜对比与海岸视频为实际工作流结果。
 
 ## 首页
 
 最近作品、创作工具和共享队列放在同一页。
 
-![桌面首页](home.png)
+![桌面首页](home-v10.png)
+
+## 文生图
+
+填写提示词即可生成图片，无需上传参考图。
+
+![文生图提示词](turbo-prompt.png)
+
+设置画幅和生成参数，按需选择 LoRA。
+
+![文生图参数](turbo-parameters.png)
+
+![实际文生图结果](turbo-result.png)
 
 ## 创作
 
@@ -74,9 +86,7 @@
 
 ![批量与 Seed](krea-dual-parameters.png)
 
-多个 LoRA 槽位可以分别填写权重。图中条目为界面演示，未安装模型文件。
-
-![LoRA 配置演示](lora-slots-demo.png)
+多个 LoRA 槽位可以分别填写权重，文生图和图生图各自保留设置。
 
 ## 视频创作
 
@@ -134,11 +144,11 @@ H3 支持从文字开始，也可以上传图片作为首帧。
 
 ## LoRA 说明与结果查看
 
-阅读说明、选择 LoRA，再填写权重。图中使用演示条目，见[素材说明](../NOTES.md)。
+阅读说明、选择 LoRA，再填写权重。图中的三个风格 LoRA 已用于本次静物生成，见[素材说明](../NOTES.md)。
 
-![LoRA 选择与说明](lora-guide-v9.png)
+![LoRA 选择与说明](lora-guide-v10.png)
 
-![LoRA 完整说明](lora-description-v9.png)
+![LoRA 完整说明](lora-description-v10.png)
 
 打开实际生成的蓝调庭院，放大查看细节。
 

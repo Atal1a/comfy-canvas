@@ -26,7 +26,12 @@ port = 8090
 
 [features]
 # Disable workflows whose models or custom nodes are not installed.
-workflows = ["qwen2511-modular-flux2", "krea-identity-edit", "minimax-h3"]
+workflows = ["krea-turbo", "qwen2511-modular-flux2", "krea-identity-edit", "minimax-h3"]
+
+[models.krea_turbo]
+base_model = "krea2_turbo_fp8_scaled.safetensors"
+text_encoder = "qwen3vl_4b_fp8_scaled.safetensors"
+vae = "qwen_image_vae.safetensors"
 
 [models.krea_identity]
 base_model = "krea2_turbo_fp8_scaled.safetensors"

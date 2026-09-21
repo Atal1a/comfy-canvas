@@ -27,6 +27,11 @@ class Check:
 
 def _model_requirements(settings: AppSettings) -> dict[str, tuple[tuple[str, str], ...]]:
     return {
+        "krea-turbo": (
+            ("diffusion_models", settings.krea_turbo_model),
+            ("text_encoders", settings.krea_turbo_text_encoder),
+            ("vae", settings.krea_turbo_vae),
+        ),
         "krea-identity-edit": (
             ("diffusion_models", settings.krea_identity_model),
             ("text_encoders", settings.krea_identity_text_encoder),

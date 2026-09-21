@@ -1,6 +1,6 @@
 # 工作流来源
 
-Krea2 Identity Edit、Qwen Image Edit 2511 和 MiniMax H3 的工作流编排由 Atal1a 搭建与适配。ComfyUI、模型和自定义节点的来源见[第三方说明](../THIRD_PARTY_NOTICES.md)。
+Krea2 Turbo 文生图、Krea2 Identity Edit、Qwen Image Edit 2511 和 MiniMax H3 的工作流编排由 Atal1a 搭建与适配。ComfyUI、模型和自定义节点的来源见[第三方说明](../THIRD_PARTY_NOTICES.md)。
 
 ## Flux 高清放大
 

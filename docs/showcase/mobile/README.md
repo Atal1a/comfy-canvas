@@ -2,7 +2,21 @@
 
 [返回展示首页](../../../README.md) · [查看桌面端](../desktop/README.md)
 
-部分图片用于界面演示；庭院日夜对比与海岸视频为实际工作流结果。
+部分图片用于界面演示；陶器文生图、庭院日夜对比与海岸视频为实际工作流结果。
+
+## 文生图
+
+输入提示词、选择画幅和 LoRA，不需要参考图片。
+
+<img src="turbo-prompt.png" width="390" alt="手机文生图提示词">
+
+<img src="turbo-parameters.png" width="390" alt="手机文生图参数">
+
+查看实际生成结果，再打开媒体信息或复用参数。
+
+<img src="turbo-result.png" width="390" alt="手机文生图结果">
+
+<img src="turbo-info.png" width="390" alt="文生图结果参数">
 
 ## 单张图片缩放
 
@@ -40,7 +54,7 @@
 
 查看最近作品，选择接下来要用的创作工具。
 
-<img src="home.png" width="390" alt="手机首页">
+<img src="home-v10.png" width="390" alt="手机首页">
 
 ## 创作
 
@@ -112,7 +126,5 @@
 首页往下可看创作入口和队列；媒体信息面板内可以继续查看生成参数。
 
 Scroll through the home page and the image settings panel.
-
-<img src="home-scrolled-v8.png" width="390" alt="手机首页向下浏览">
 
 <img src="info-scrolled-v8.png" width="390" alt="媒体信息面板向下浏览">

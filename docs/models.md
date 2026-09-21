@@ -24,7 +24,9 @@ text_encoder = 'qwen_3_8b.safetensors'
 
 ## 默认参考文件
 
-三条主工作流的 12 个唯一文件已经记录在 `models.lock.json`，包括 Hugging Face 仓库、固定 revision、仓库内路径、许可证标识、字节数和 SHA-256。来源 URL 指向上游模型仓库。
+四条主工作流的 12 个唯一文件已经记录在 `models.lock.json`，包括 Hugging Face 仓库、固定 revision、仓库内路径、许可证标识、字节数和 SHA-256。Krea Turbo 文生图与 Identity Edit 共用基础模型、编码器和 VAE，文生图不需要 Identity Edit LoRA。来源 URL 指向上游模型仓库。
+
+文生图文件名在 `[models.krea_turbo]` 中设置；未填写时沿用 `[models.krea_identity]` 的对应配置。
 
 | 工作流 | ComfyUI 目录 | 默认文件 | 必需 |
 |---|---|---|---|
