@@ -12,6 +12,7 @@ from unittest.mock import patch
 from fastapi import HTTPException
 
 import mobile_server.app as app_module
+from mobile_server.config import DEFAULT_WORKFLOWS
 
 
 STATIC = Path(__file__).resolve().parents[1] / "static"
@@ -32,10 +33,11 @@ class UiSimplificationTests(unittest.TestCase):
         self.temporary.cleanup()
 
     def test_primary_workflows_include_minimax_h3(self) -> None:
-        descriptors = asyncio.run(app_module.workflows())
+        with patch.object(app_module, "ENABLED_WORKFLOW_KEYS", frozenset(DEFAULT_WORKFLOWS)):
+            descriptors = asyncio.run(app_module.workflows())
         self.assertEqual(
             [item["key"] for item in descriptors],
-            ["krea-identity-edit", "minimax-h3", "qwen2511-modular-flux2"],
+            ["krea-turbo", "krea-identity-edit", "minimax-h3", "qwen2511-modular-flux2"],
         )
         with self.assertRaises(HTTPException) as retired:
             asyncio.run(app_module.submit_job("removed-workflow", "old", "{}", None, None, None))
