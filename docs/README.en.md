@@ -12,9 +12,9 @@
   <a href="../README.md">中文</a>
 </p>
 
-[![Watch Comfy Canvas on desktop and mobile](showcase/intro/cover.jpg)](showcase/intro/comfy-canvas-intro.mp4)
+[![Watch Comfy Canvas on desktop and mobile](showcase/intro/cover.jpg)](https://github.com/user-attachments/assets/f71ac999-59b7-4a68-96ee-3665c4d4aff7)
 
-<p align="center"><a href="showcase/intro/comfy-canvas-intro.mp4">Watch the demo · 55 seconds</a></p>
+<p align="center"><a href="https://github.com/user-attachments/assets/f71ac999-59b7-4a68-96ee-3665c4d4aff7">Watch the demo · 55 seconds</a> · <a href="showcase/intro/comfy-canvas-intro.mp4?raw=true">Download video</a></p>
 
 Comfy Canvas brings parameter forms, a task queue, result previews and a gallery to ComfyUI. Upload a reference, write a prompt, adjust settings, then inspect the result, compare it with the original or reuse its settings for another edit.
 

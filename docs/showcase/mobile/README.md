@@ -6,7 +6,7 @@
   <a href="../../../README.md">项目首页</a> ·
   <a href="../desktop/README.md">桌面展示</a> ·
   <a href="../../features.md">功能与工作流</a> ·
-  <a href="../intro/comfy-canvas-intro.mp4">观看介绍视频</a>
+  <a href="https://github.com/user-attachments/assets/f71ac999-59b7-4a68-96ee-3665c4d4aff7">观看介绍视频</a>
 </p>
 
 <p align="center">
@@ -39,16 +39,18 @@
 在瀑布流中双指收拢或张开，可以切换一、二、三列布局。打开单张图片后，双指缩放、拖动查看细节；底部缩略图用于切换作品。
 
 <p align="center">
-  <a href="current/image-zoom.mp4"><img src="current/viewer.jpg" width="360" alt="手机全屏图片浏览与底部操作栏"></a>
+  <a href="https://github.com/user-attachments/assets/7f22246f-2057-49c0-93de-cac57ea8c6c6"><img src="current/viewer.jpg" width="360" alt="手机全屏图片浏览与底部操作栏"></a>
 </p>
 
-[观看瀑布流列数切换 · 60 帧](current/gallery-gesture.mp4) · [观看图片缩放 · 60 帧](current/image-zoom.mp4)
+[观看瀑布流列数切换 · 60 帧](https://github.com/user-attachments/assets/798fe894-929d-4bfc-99c1-943d9f3e1523) · [下载](current/gallery-gesture.mp4?raw=true)
+
+[观看图片缩放 · 60 帧](https://github.com/user-attachments/assets/7f22246f-2057-49c0-93de-cac57ea8c6c6) · [下载](current/image-zoom.mp4?raw=true)
 
 ## 带着参数继续修改
 
 在媒体信息中查看提示词和生成参数。选择调整参数后重跑，会回到创作页面，保留原有内容供继续修改。
 
-[观看返回参数页并继续调整 · 60 帧](current/continue-editing.mp4)
+[观看返回参数页并继续调整 · 60 帧](https://github.com/user-attachments/assets/f55e4a93-5b96-4aec-af64-6855ea1f8d48) · [下载](current/continue-editing.mp4?raw=true)
 
 <details>
 <summary>查看媒体信息面板</summary>

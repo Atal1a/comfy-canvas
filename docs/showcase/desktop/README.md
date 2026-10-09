@@ -6,7 +6,7 @@
   <a href="../../../README.md">项目首页</a> ·
   <a href="../mobile/README.md">手机展示</a> ·
   <a href="../../features.md">功能与工作流</a> ·
-  <a href="../intro/comfy-canvas-intro.mp4">观看介绍视频</a>
+  <a href="https://github.com/user-attachments/assets/f71ac999-59b7-4a68-96ee-3665c4d4aff7">观看介绍视频</a>
 </p>
 
 ![桌面首页：最近作品、创作工具和共享队列](current/home.jpg)
@@ -39,17 +39,17 @@ Krea2 Turbo 的文生图页面无需上传参考图。填写画面描述后，�
 
 拖动分隔线查看原图与结果的差别，也可以放大、拖动检查局部。复用参数时，原图、提示词和生成设置会带回创作页面。
 
-[![庭院从午后到蓝调时刻的原图对比](current/compare.jpg)](current/compare.mp4)
+[![庭院从午后到蓝调时刻的原图对比](current/compare.jpg)](https://github.com/user-attachments/assets/8c4b0a20-d17c-44b6-a3b6-0fe0be7f20b4)
 
-[观看拖动对比 · 60 帧](current/compare.mp4)
+[观看拖动对比 · 60 帧](https://github.com/user-attachments/assets/8c4b0a20-d17c-44b6-a3b6-0fe0be7f20b4) · [下载](current/compare.mp4?raw=true)
 
 ## 悬停查看提示词与参数
 
 鼠标移到作品卡片上，即可查看提示词和主要参数。卡片上还可以收藏作品、调整参数或打开原图。
 
-[![桌面端悬停在作品上查看生成信息](current/hover.jpg)](current/hover.mp4)
+[![桌面端悬停在作品上查看生成信息](current/hover.jpg)](https://github.com/user-attachments/assets/a1e27924-d328-42d3-bc18-eefd898624cb)
 
-[观看悬停操作 · 60 帧](current/hover.mp4)
+[观看悬停操作 · 60 帧](https://github.com/user-attachments/assets/a1e27924-d328-42d3-bc18-eefd898624cb) · [下载](current/hover.mp4?raw=true)
 
 ## 浏览与整理作品
 

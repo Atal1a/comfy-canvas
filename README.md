@@ -12,9 +12,9 @@
   <a href="docs/README.en.md">English</a>
 </p>
 
-[![观看演示：Comfy Canvas 的电脑与手机界面](docs/showcase/intro/cover.jpg)](docs/showcase/intro/comfy-canvas-intro.mp4)
+[![观看演示：Comfy Canvas 的电脑与手机界面](docs/showcase/intro/cover.jpg)](https://github.com/user-attachments/assets/f71ac999-59b7-4a68-96ee-3665c4d4aff7)
 
-<p align="center"><a href="docs/showcase/intro/comfy-canvas-intro.mp4">观看演示 · 55 秒</a></p>
+<p align="center"><a href="https://github.com/user-attachments/assets/f71ac999-59b7-4a68-96ee-3665c4d4aff7">观看演示 · 55 秒</a> · <a href="docs/showcase/intro/comfy-canvas-intro.mp4?raw=true">下载视频</a></p>
 
 Comfy Canvas 为 ComfyUI 提供参数表单、任务队列、结果预览和作品管理。上传参考图、填写提示词、调整参数，再查看结果、对比原图，或带着已有参数继续修改。
 
