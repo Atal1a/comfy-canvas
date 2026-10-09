@@ -1,50 +1,71 @@
-# Comfy Canvas
+<h1 align="center">Comfy Canvas</h1>
 
-[English](docs/README.en.md) · [1.0.1 版本说明](docs/releases/1.0.1.md)
+<p align="center">
+  <strong>让 ComfyUI 更顺手。</strong><br>
+  面向电脑与手机的开源创作界面。
+</p>
 
-在电脑和手机浏览器中生成图片、编辑图片、制作视频，再用瀑布流浏览和管理作品。Comfy Canvas 基于 ComfyUI，在 Windows 电脑上运行，既可以自己用，也可以让同一局域网里的其他人一起用。
+<p align="center">
+  <a href="#安装">安装</a> ·
+  <a href="docs/features.md">功能与工作流</a> ·
+  <a href="docs/releases/1.0.1.md">版本说明</a> ·
+  <a href="docs/README.en.md">English</a>
+</p>
 
-[![观看 Comfy Canvas 功能演示](docs/showcase/film-v10-preview.gif)](docs/showcase/comfy-canvas-film-v10.mp4)
+[![观看演示：Comfy Canvas 的电脑与手机界面](docs/showcase/intro/cover.jpg)](docs/showcase/intro/comfy-canvas-intro.mp4)
 
-[播放完整视频 · 2:28](docs/showcase/comfy-canvas-film-v10.mp4) · [桌面端](docs/showcase/desktop/README.md) · [手机端](docs/showcase/mobile/README.md)
+<p align="center"><a href="docs/showcase/intro/comfy-canvas-intro.mp4">观看演示 · 55 秒</a></p>
 
-## 让作品成为界面的主角
+Comfy Canvas 为 ComfyUI 提供参数表单、任务队列、结果预览和作品管理。上传参考图、填写提示词、调整参数，再查看结果、对比原图，或带着已有参数继续修改。
 
-深色背景、圆角卡片和大幅预览，把更多空间留给图片。横图与竖图保留各自比例，排成瀑布流；从一张作品点进去，就能查看细节、对比原图，或带着参数继续编辑。
+服务运行在自己的 Windows 电脑上。电脑和手机都通过浏览器访问，也可以与同一局域网里的其他人一起使用。
 
-![作品瀑布流](docs/showcase/desktop/gallery.png)
+## 从创作到继续修改
 
-桌面端把参考图、编辑要求和生成参数分步呈现。手机端则用全屏图片浏览、底部操作栏和悬浮导航适应小屏幕；双指收拢或张开，可以在一、二、三列瀑布流之间切换。
+- **图片生成与编辑**：输入提示词生成图片，或上传参考图描述修改要求；设置画幅、Seed 和 LoRA。
+- **视频生成**：从文字或首帧图片开始，设置时长与画幅，在结果页播放视频。
+- **继续修改**：复用原图、提示词和参数，调整后再次生成；也可以对结果进行高清放大。
 
-## 从创作到整理
+![电脑与手机上的参数修改页面](docs/showcase/intro/continue-editing.jpg)
 
-- **图片生成**：使用 Krea Turbo 输入提示词直接文生图，无需参考图片；调整画幅、生成数量、Seed 和最多十个 LoRA 的权重。
-- **图片编辑**：修改已有图片，上传或裁切参考图，对比生成前后的效果，再继续编辑或高清放大。
-- **视频生成**：通过文字描述或首帧图片生成视频，设置时长与画幅，查看和播放结果。
-- **任务进度**：查看排队与生成状态，取消任务，完成后直接查看结果。
-- **继续创作**：放大、拖动、对比原图，复用参数或接着编辑。
-- **作品管理**：筛选、排序、收藏和分享；误删的作品可在回收站保留期内恢复。
+Comfy Canvas 为本项目作者制作的工作流提供配套的创作界面。当前版本仅支持下列工作流及其对应模型。
 
-支持 Krea2 Turbo 文生图、Krea2 Identity Edit、Qwen Image Edit 2511 和 MiniMax H3。[查看工作流与完整功能](docs/features.md)
+Krea2 Turbo、Krea2 Identity Edit、Qwen Image Edit 2511、MiniMax H3，以及 Flux 高清放大。[查看工作流与完整功能](docs/features.md)
+
+## 查看细节与生成信息
+
+| 拖动对比原图与结果 | 电脑端悬停查看提示词与参数 |
+| :---: | :---: |
+| ![拖动分隔线，对比庭院修改前后的光线](docs/showcase/intro/compare.jpg) | ![鼠标悬停在作品卡片上，展示提示词和生成参数](docs/showcase/intro/hover.jpg) |
+
+打开作品后可以放大、拖动查看局部。手机支持双指缩放图片，也可以用双指手势调整瀑布流的列数。
+
+## 浏览与整理作品
+
+横图和竖图按原有比例排列。筛选、排序、收藏作品，查看生成进度，或把结果分享给其他账号。误删的作品可在回收站保留期内恢复。
+
+![按图片比例排列的作品瀑布流](docs/showcase/intro/gallery.jpg)
+
+[更多桌面操作](docs/showcase/desktop/README.md) · [更多手机操作](docs/showcase/mobile/README.md)
 
 ## 选择使用方式
 
-### 自己使用
+**自己使用**：在自己的 Windows 电脑上运行 ComfyUI 和 Comfy Canvas，用电脑或手机浏览器完成创作与作品管理。
 
-在自己的 Windows 电脑上运行 ComfyUI 和 Comfy Canvas，用浏览器完成创作与作品管理。
+**局域网共享**：一台 Windows 电脑运行模型，其他人通过浏览器访问。各账号管理自己的作品，生成任务共用服务器的显卡和队列。
 
-仅在这台电脑访问时，将配置中的 `server.host` 设为 `127.0.0.1`，打开 `http://127.0.0.1:8090` 即可。如果想用自己的手机操作，也可以按下面的局域网配置，登录同一个账号。
+<details>
+<summary>本机与局域网配置</summary>
 
-### 本机作为服务器，多人使用
+仅在本机访问时，将 `config.toml` 中的 `server.host` 设为 `127.0.0.1`，打开 `http://127.0.0.1:8090`。
 
-由一台 Windows 电脑运行 ComfyUI、模型和 Comfy Canvas，其他人用同一局域网里的电脑或手机访问，无需在各自设备安装模型。
+使用手机或其他局域网设备访问时，将 `server.host` 设为 `0.0.0.0`，打开启动窗口显示的局域网地址。自己的设备可以登录同一个账号。
 
-- 将 `server.host` 设为 `0.0.0.0`，访问启动窗口显示的局域网地址。
-- 管理员在“设置 → 用户与邀请”中生成邀请码，其他人注册自己的账号。
-- 各账号管理自己的作品，通过消息分享结果；生成任务共用服务器的显卡和队列。
-- 管理员可以查看用户、存储和队列，并在配置中设置用户限额。
+管理员在“设置 → 用户与邀请”中生成邀请码，其他人注册自己的账号。管理员可以查看用户、存储和队列，并在配置中设置用户限额。
 
-服务器电脑需要保持开机，ComfyUI 和 Comfy Canvas 都要运行。
+服务器电脑需要保持开机，ComfyUI 和 Comfy Canvas 都要运行。详细步骤见[安装与配置](docs/setup.md)。
+
+</details>
 
 ## 安装
 

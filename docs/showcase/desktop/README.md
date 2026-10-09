@@ -1,155 +1,80 @@
-# 桌面端
+<h1 align="center">桌面端</h1>
 
-[返回展示首页](../../../README.md) · [查看手机端](../mobile/README.md)
+<p align="center">在一个窗口里完成创作、查看与整理。</p>
 
-部分图片用于界面演示；陶器文生图、庭院日夜对比与海岸视频为实际工作流结果。
+<p align="center">
+  <a href="../../../README.md">项目首页</a> ·
+  <a href="../mobile/README.md">手机展示</a> ·
+  <a href="../../features.md">功能与工作流</a> ·
+  <a href="../intro/comfy-canvas-intro.mp4">观看介绍视频</a>
+</p>
 
-## 首页
+![桌面首页：最近作品、创作工具和共享队列](current/home.jpg)
 
-最近作品、创作工具和共享队列放在同一页。
+从最近作品继续编辑，或选择工具开始新的任务。首页同时显示共享队列，便于查看当前的生成状态。
 
-![桌面首页](home-v10.png)
+## 分步创建任务
 
-## 文生图
+先选择工作流、上传参考图并填写修改要求，再设置画幅、生成数量、Seed 和 LoRA。文生图可以直接从提示词开始。
 
-填写提示词即可生成图片，无需上传参考图。
-
-![文生图提示词](turbo-prompt.png)
-
-设置画幅和生成参数，按需选择 LoRA。
-
-![文生图参数](turbo-parameters.png)
-
-![实际文生图结果](turbo-result.png)
-
-## 创作
-
-上传图片，填写编辑要求，再设置画幅和参数。
-
-![参考图和编辑要求](create-reference.png)
-
-![参数与 LoRA](create-parameters.png)
-
-## 结果与复用
-
-原图、结果和参数放在一起；重跑时可以带回原有内容继续调整。
-
-![实际编辑结果](result.png)
+![上传参考图并填写修改要求](current/create.jpg)
 
 <details>
-<summary>复用原图和提示词</summary>
+<summary>查看画幅、模型与生成参数</summary>
 
-![带原有内容重跑](rerun.png)
-
-</details>
-
-## 作品瀑布流
-
-横幅和竖幅按各自比例排列，向下滚动继续浏览。
-
-![作品瀑布流](gallery.png)
-
-![桌面瀑布流实际滚动](gallery-scroll.gif)
-
-[观看清晰版视频](gallery-scroll.mp4)
-
-<details>
-<summary>只看收藏的作品</summary>
-
-![收藏筛选](favorites.png)
+![桌面端参数与 LoRA 页面](current/parameters.jpg)
 
 </details>
 
 <details>
-<summary>裁切图片</summary>
+<summary>从文字开始生成图片</summary>
 
-选择画幅，拖动框选区域，再应用裁切。
+Krea2 Turbo 的文生图页面无需上传参考图。填写画面描述后，进入下一步设置画幅与参数。
 
-![裁切交互](crop.gif)
+![文生图的提示词输入页面](current/text-to-image.jpg)
 
 </details>
+
+## 对比结果，接着修改
+
+拖动分隔线查看原图与结果的差别，也可以放大、拖动检查局部。复用参数时，原图、提示词和生成设置会带回创作页面。
+
+[![庭院从午后到蓝调时刻的原图对比](current/compare.jpg)](current/compare.mp4)
+
+[观看拖动对比 · 60 帧](current/compare.mp4)
+
+## 悬停查看提示词与参数
+
+鼠标移到作品卡片上，即可查看提示词和主要参数。卡片上还可以收藏作品、调整参数或打开原图。
+
+[![桌面端悬停在作品上查看生成信息](current/hover.jpg)](current/hover.mp4)
+
+[观看悬停操作 · 60 帧](current/hover.mp4)
+
+## 浏览与整理作品
+
+横图与竖图保留各自比例，排列成瀑布流。按工作流、收藏夹和时间筛选作品；用独立账号保存内容，也可以通过消息分享结果。
 
 <details>
-<summary>管理账号与共享队列</summary>
+<summary>查看作品瀑布流</summary>
 
-查看账号、邀请码与共享队列。
-
-![管理员页面](admin-live.png)
+![桌面作品瀑布流与筛选栏](current/gallery.jpg)
 
 </details>
 
-## 双参考图与参数
+删除的作品进入回收站，15 分钟内可以恢复，逾期自动永久清理。
 
-在同一张表单里查看两张参考图，设置批量数量、画幅和 Seed。
+## 视频与任务
 
-![双参考图](krea-dual-reference.png)
+MiniMax H3 支持从文字或首帧图片生成视频。填写内容后设置时长、画幅等参数，完成后在结果页播放。运行中的任务可以查看进度或取消。
 
-![批量与 Seed](krea-dual-parameters.png)
+<details>
+<summary>查看视频创作页面</summary>
 
-多个 LoRA 槽位可以分别填写权重，文生图和图生图各自保留设置。
+![MiniMax H3 视频提示词页面](current/video.jpg)
 
-## 视频创作
+</details>
 
-H3 支持从文字开始，也可以上传图片作为首帧。
+管理员还可以管理用户、邀请码、存储与共享队列，查看运行诊断。
 
-![文字入口](h3-text-entry.png)
-
-![首帧图片入口](h3-image-entry.png)
-
-![视频参数](h3-parameters.png)
-
-这段海岸视频由 H3 工作流实际生成。
-
-![真实视频播放](h3-playing.png)
-
-[播放海岸视频](coast-h3-result.mp4)
-
-## 任务与作品管理
-
-运行中的任务可以取消。
-
-![运行任务](task-running.png)
-
-![取消完成](task-cancelled.png)
-
-删除的内容进入回收站，15 分钟内可恢复；逾期自动永久清理。
-
-![回收站](recycle-bin.png)
-
-[删除与恢复操作](recycle-restore.mp4)
-
-## 原图浏览
-
-打开原图后可以放大，再拖动查看局部。
-
-![原图放大](original-zoom.png)
-
-[放大与拖动视频](original-zoom-pan.mp4)
-
-用收藏夹整理作品，分享时将输入图和参数一起交给另一个账号。
-
-![收藏夹](collections.png)
-
-![接收分享](share-received.png)
-
-## 管理与帮助
-
-查看存储、数据库和后端连接状态，参数不清楚时可以打开页面说明。
-
-![存储管理](storage.png)
-
-![运行诊断](diagnostics.png)
-
-![页面帮助](page-help.png)
-
-## LoRA 说明与结果查看
-
-阅读说明、选择 LoRA，再填写权重。图中的三个风格 LoRA 已用于本次静物生成，见[素材说明](../NOTES.md)。
-
-![LoRA 选择与说明](lora-guide-v10.png)
-
-![LoRA 完整说明](lora-description-v10.png)
-
-打开实际生成的蓝调庭院，放大查看细节。
-
-![生成结果查看器](result-viewer-v8.png)
+[安装与配置](../../setup.md) · [手机展示](../mobile/README.md) · [展示素材说明](../NOTES.md)

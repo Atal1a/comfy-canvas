@@ -1,50 +1,71 @@
-# Comfy Canvas
+<h1 align="center">Comfy Canvas</h1>
 
-[中文](../README.md) · [Version 1.0.1](releases/1.0.1.md)
+<p align="center">
+  <strong>Make ComfyUI easier to use.</strong><br>
+  An open-source creative interface for desktop and mobile.
+</p>
 
-Generate images, edit photos and create videos from a desktop or phone browser, then browse and organize your work in a masonry gallery. Built on ComfyUI, Comfy Canvas runs on a Windows PC for personal use or shared access over your LAN.
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="features.md">Features & workflows</a> ·
+  <a href="releases/1.0.1.md">Release notes</a> ·
+  <a href="../README.md">中文</a>
+</p>
 
-[![Watch Comfy Canvas](showcase/film-v10-preview.gif)](showcase/comfy-canvas-film-v10.mp4)
+[![Watch Comfy Canvas on desktop and mobile](showcase/intro/cover.jpg)](showcase/intro/comfy-canvas-intro.mp4)
 
-[Watch the film · 2:28](showcase/comfy-canvas-film-v10.mp4) · [Desktop](showcase/desktop/README.md) · [Mobile](showcase/mobile/README.md)
+<p align="center"><a href="showcase/intro/comfy-canvas-intro.mp4">Watch the demo · 55 seconds</a></p>
 
-## Room for your work
+Comfy Canvas brings parameter forms, a task queue, result previews and a gallery to ComfyUI. Upload a reference, write a prompt, adjust settings, then inspect the result, compare it with the original or reuse its settings for another edit.
 
-A dark background, rounded cards and large previews keep the images in focus. Portrait and landscape images fit together in a masonry gallery. Open a work to inspect details, compare it with the source, or bring its settings into your next edit.
+Run it on your own Windows PC and access it through a desktop or phone browser. You can also share access with other people on the same LAN.
 
-![Desktop gallery](showcase/desktop/gallery.png)
+## Create and keep editing
 
-On desktop, reference images, instructions and settings are arranged in steps. On a phone, full-screen viewing, bottom controls and floating navigation keep actions within reach. Pinch the gallery to switch between one, two and three columns.
+- **Generate and edit images**: start with a text prompt or upload a reference and describe your changes. Set dimensions, seeds and LoRAs.
+- **Generate videos**: start with text or a first-frame image, set duration and aspect ratio, then play the result.
+- **Continue editing**: reuse the original image, prompt and settings for another generation, or upscale a result.
 
-## Create, inspect, organize
+![Parameter editing on desktop and mobile](showcase/intro/continue-editing.jpg)
 
-- **Image generation**: turn a text prompt into an image with Krea Turbo, without a reference image. Set dimensions, batch size and seeds, and adjust up to ten optional LoRAs.
-- **Image editing**: modify existing images, crop references, compare before and after, then continue editing or upscale the result.
-- **Video generation**: turn a text prompt or first-frame image into a video, set its duration and aspect ratio, and play the result.
-- Follow the shared queue, check progress and cancel tasks.
-- Zoom, pan, compare results and reuse settings for another edit.
-- Filter, sort, collect and share works; recover deleted items within the recycle-bin retention period.
+Comfy Canvas provides a dedicated creative interface for workflows built by the project's author. The current version supports only the workflows listed below and their corresponding models.
 
-Workflows include Krea2 Turbo text-to-image, Krea2 Identity Edit, Qwen Image Edit 2511 and MiniMax H3. [Full feature list](features.md)
+Krea2 Turbo, Krea2 Identity Edit, Qwen Image Edit 2511, MiniMax H3, and Flux upscaling. [Full feature and workflow list](features.md)
 
-## Two ways to use it
+## Inspect results and generation settings
 
-### On your own PC
+| Drag to compare the original and result | Hover on desktop to see prompts and settings |
+| :---: | :---: |
+| ![Compare the courtyard before and after the lighting edit](showcase/intro/compare.jpg) | ![Hover over a gallery card to reveal its prompt and generation settings](showcase/intro/hover.jpg) |
 
-Run ComfyUI and Comfy Canvas on the same Windows PC. Set `server.host` to `127.0.0.1` for access from that computer only, then open `http://127.0.0.1:8090`.
+Open a work to zoom in and pan across details. On a phone, pinch to zoom into an image or change the number of gallery columns.
 
-To use your own phone as well, enable LAN access as described below and sign in with the same account.
+## Browse and organize your work
 
-### Your PC as a shared LAN server
+Portrait and landscape images keep their proportions in a masonry gallery. Filter, sort and collect works, follow generation progress, or share results with another account. Deleted works can be restored during the recycle-bin retention period.
 
-One Windows PC runs ComfyUI, the models and Comfy Canvas. Other people connect from a computer or phone on the same LAN; they only need a browser.
+![A masonry gallery that preserves image proportions](showcase/intro/gallery.jpg)
 
-- Set `server.host` to `0.0.0.0` and use the LAN address shown in the launch window.
-- Create invitation codes in the administrator settings so others can register their own accounts.
-- Each account manages its own works and can share results through messages. Generation uses the server GPU and shared queue.
-- Administrators manage users, storage and tasks, with user limits in the configuration.
+[More desktop controls](showcase/desktop/README.md) · [More mobile controls](showcase/mobile/README.md)
 
-Keep the server PC, ComfyUI and Comfy Canvas running.
+## Choose how to use it
+
+**Personal use**: run ComfyUI and Comfy Canvas on your Windows PC, then create and organize work from a desktop or phone browser.
+
+**Shared LAN access**: one Windows PC runs the models while other people connect through their browsers. Each account manages its own works; generation uses the server GPU and shared queue.
+
+<details>
+<summary>Local and LAN configuration</summary>
+
+For access from the server PC only, set `server.host` to `127.0.0.1` in `config.toml`, then open `http://127.0.0.1:8090`.
+
+For a phone or another device on the same LAN, set `server.host` to `0.0.0.0` and use the LAN address shown in the launch window. You can sign in with the same account on your own devices.
+
+Administrators can create invitation codes in the user settings so others can register their own accounts. They can also manage users, storage and the queue, with user limits in the configuration.
+
+Keep the server PC, ComfyUI and Comfy Canvas running. See the [setup guide](setup.md) for details.
+
+</details>
 
 ## Install
 

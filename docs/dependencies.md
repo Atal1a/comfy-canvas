@@ -25,11 +25,11 @@
 | main | MiniMax H3 | `ComfyUI-KJNodes`、`ComfyUI-MiniMax-H3-Turbo` |
 | optional | Flux 增强放大 | Custom Scripts、EditUtils、Easy Use、SeedVR2、LayerStyle、TTP Toolset、Memory Cleanup、RES4LYF |
 
-Qwen 2511 主工作流所用专用节点来自固定版本的 ComfyUI 本体，不需要额外自定义节点。
+Krea2 Turbo 文生图与 Qwen 2511 主工作流所用节点来自固定版本的 ComfyUI 本体，不需要额外自定义节点。
 
 默认使用用户已配置好的 ComfyUI。接入已有环境时，按上表在 ComfyUI 自身的 Python 环境中安装节点。
 
-以下脚本仅适用于通过 `bootstrap.ps1 -InstallComfyUI` 创建的 `runtime/ComfyUI` 环境。安装三条主工作流的最小节点集：
+以下脚本仅适用于通过 `bootstrap.ps1 -InstallComfyUI` 创建的 `runtime/ComfyUI` 环境。安装主工作流所需的最小节点集：
 
 ```powershell
 .\scripts\install_verified_nodes.ps1 -Profile main
